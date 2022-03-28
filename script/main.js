@@ -48,19 +48,19 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
             return;
         }
 
-        fetch('/api/GameSessions', {
+        fetch('https://clue-app-service-windows.azurewebsites.net/api/GameSessions', {
             method: 'POST',
             // mode: 'no-cors',
             // credentials: 'same-origin',
             redirect: 'error',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
-                'Authentication': accessToken
+                'Authorization': 'Bearer ' + accessToken
             },
             body: ''
         }).then((response) => {
 
-            if (response.ok && response.status == 200) {
+            if (response.ok && response.status == 201) {
                 console.log("Start game response 200 ok");
             }
 
@@ -108,14 +108,14 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
             return;
         }
 
-        fetch('/api/GameSessions/join', {
+        fetch('https://clue-app-service-windows.azurewebsites.net/api/GameSessions/join', {
             method: 'POST',
             // mode: 'no-cors',
             // credentials: 'same-origin',
             redirect: 'error',
             headers: {
                 'content-type': 'application/x-www-form-urlencoded',
-                'Authentication': accessToken
+                'Authorization': 'Bearer ' + accessToken
             },
             body: 'code=' + inputGameCode
         }).then((response) => {
@@ -187,7 +187,8 @@ function parseJwt(token) {
 function handleCredentialResponse(response) {
 
     JWT = response.credential;
-    JWT_json_Str = '{ "credential" : "' + JWT + '" }';
+    JWT_json_Str = '{ "idToken" : "' + JWT + '" }';
+
     const responsePayload = parseJwt(JWT);
     console.log(JWT);
     console.log(JWT_json_Str);
@@ -206,7 +207,7 @@ function handleCredentialResponse(response) {
         });
     }
 
-    fetch('/authentication/google', {
+    fetch('https://clue-app-service-windows.azurewebsites.net/api/authentication/google', {
         method: 'POST',
         // mode: 'no-cors',
         // credentials: 'same-origin',
