@@ -1,8 +1,8 @@
-.center {
+.logo {
     text-align: center;
 }
 
-section {
+.google-sign-in {
     display: flex;
     justify-content: center;
 }
