@@ -30,8 +30,16 @@ function signOut() {
     location.reload();
 }
 
-function signedInBtns() {
+$(document).on('show.bs.modal', '#signedInModal', function () {
+    $("#signedInModalError").hide();
+
     let accessToken = getCookie('accessToken');
+
+    $("#signOutBtn").click(function () {
+
+        signOut();
+        return;
+    });
 
     $("#startGameBtn").click(function () {
 
@@ -140,11 +148,16 @@ function signedInBtns() {
             }
         }).catch((error) => {
             console.error('Error: ', error);
-            $("#signedInModalError").html("Start Game Failed.");
+            $("#signedInModalError").html("Join Game Failed.");
             $("#signedInModalError").fadeIn(300);
         });
     });
-}
+})
+
+
+// function signedInBtns() {
+    
+// }
 
 
 $(document).ready(function () {
@@ -157,7 +170,7 @@ $(document).ready(function () {
         $("#signedInModal").modal('hide');
     }
 
-    signedInBtns();
+    // signedInBtns();
 });
 
 
@@ -231,7 +244,7 @@ function handleCredentialResponse(response) {
             console.log("accessToken returned after POST");
             setCookie('accessToken', response_json.accessToken);
             $("#signedInModal").modal('show');
-            signedInBtns();
+            // signedInBtns();
         }
         else {
             console.log("No accessToken returned after POST");
