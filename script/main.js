@@ -58,8 +58,8 @@ function signedInBtns() {
 
             else {
                 console.error('Error: ', response.status + ' ' + response.statusText);
-                $("#error").html("Start Game Failed.");
-                $("#error").fadeIn(300);
+                $("#signedInModalError").html("Start Game Failed.");
+                $("#signedInModalError").fadeIn(300);
             }
 
             const contentType = response.headers.get('content-type');
@@ -79,8 +79,8 @@ function signedInBtns() {
             }
         }).catch((error) => {
             console.error('Error: ', error);
-            $("#error").html("Start Game Failed.");
-            $("#error").fadeIn(300);
+            $("#signedInModalError").html("Start Game Failed.");
+            $("#signedInModalError").fadeIn(300);
         });
     });
 
@@ -117,8 +117,8 @@ function signedInBtns() {
 
             else {
                 console.error('Error: ', response.status + ' ' + response.statusText);
-                $("#error").html("Join Game Failed.");
-                $("#error").fadeIn(300);
+                $("#signedInModalError").html("Join Game Failed.");
+                $("#signedInModalError").fadeIn(300);
             }
 
             const contentType = response.headers.get('content-type');
@@ -138,8 +138,8 @@ function signedInBtns() {
             }
         }).catch((error) => {
             console.error('Error: ', error);
-            $("#error").html("Start Game Failed.");
-            $("#error").fadeIn(300);
+            $("#signedInModalError").html("Start Game Failed.");
+            $("#signedInModalError").fadeIn(300);
         });
     });
 }
