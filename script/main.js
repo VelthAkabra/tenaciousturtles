@@ -60,6 +60,7 @@ function signedInBtns() {
                 console.error('Error: ', response.status + ' ' + response.statusText);
                 $("#signedInModalError").html("Start Game Failed.");
                 $("#signedInModalError").fadeIn(300);
+                throw "Create a Game: Abnormal Response";
             }
 
             const contentType = response.headers.get('content-type');
@@ -75,7 +76,7 @@ function signedInBtns() {
                 window.location.href = '/clueless.html';
             }
             else {
-                console.log("Game ID or Code NOT returned after POST");
+                throw "Game ID or Code NOT returned after POST";
             }
         }).catch((error) => {
             console.error('Error: ', error);
@@ -119,6 +120,7 @@ function signedInBtns() {
                 console.error('Error: ', response.status + ' ' + response.statusText);
                 $("#signedInModalError").html("Join Game Failed.");
                 $("#signedInModalError").fadeIn(300);
+                throw "Join a Game: Abnormal Response";
             }
 
             const contentType = response.headers.get('content-type');
@@ -134,7 +136,7 @@ function signedInBtns() {
                 window.location.href = '/clueless.html';
             }
             else {
-                console.log("Game ID or Code NOT returned after POST");
+                throw "Game ID or Code NOT returned after POST";
             }
         }).catch((error) => {
             console.error('Error: ', error);
@@ -204,24 +206,24 @@ function handleCredentialResponse(response) {
 
         if (response.ok && response.status == 200) {
             console.log("response 200 ok");
-            // window.location.href = '/clueless.html';
         }
 
         else if (response.status == 400 || response.status == 403) {
             console.error('Error: ', response.status + ' ' + response.statusText);
-            display_err_msg('Log-in Failed.', 'Please check your inputs and try again.');
+            throw 'Log-in Failed: Please check your inputs and try again.';
         }
         else if (response.status == 404) {
             console.error('Error: ', response.status + ' ' + response.statusText);
-            display_err_msg('Log-in Failed: Server cannot be found.', '');
+            throw 'Log-in Failed: Server cannot be found.';
         }
         else {
             console.error('Error: ', response.status + ' ' + response.statusText);
-            display_err_msg('Log-in failed: Server processing error.', 'You may try again.');
+            throw 'Log-in failed: Server processing error.';
         }
+
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
-            throw new TypeError("Oops, we haven't got JSON!");
+            throw new TypeError("Log-in failed: we haven't got token back from server.");
         }
         return response.json();
     }).then((response_json) => {
@@ -235,7 +237,7 @@ function handleCredentialResponse(response) {
             console.log("No accessToken returned after POST");
         }
     }).catch((error) => {
-        console.error('Error: ', error);
-        display_err_msg('Log-in failed: Cannot submit to server.', 'You may try again.');
+        console.error('ErrorMsg: ', error);
+        display_err_msg(error, 'You may try again.');
     });
 }
