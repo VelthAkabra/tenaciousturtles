@@ -108,16 +108,20 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
             return;
         }
 
+        var json = new Object();
+        json.gameCode = inputGameCode;
+
+        var stringJson = JSON.stringify(json);
         fetch('https://clue-app-service-windows.azurewebsites.net/api/GameSessions/join', {
             method: 'POST',
             // mode: 'no-cors',
             // credentials: 'same-origin',
             redirect: 'error',
             headers: {
-                'content-type': 'application/x-www-form-urlencoded',
+                'content-type': 'application/json',
                 'Authorization': 'Bearer ' + accessToken
             },
-            body: 'code=' + inputGameCode
+            body: stringJson
         }).then((response) => {
 
             if (response.ok && response.status == 200) {
