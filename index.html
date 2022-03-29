@@ -1,51 +1,96 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Tenacious Turtles Login</title>
-    </head>
-  <body>
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
-        <script>
-            function parseJwt (token) {
-                var base64Url = token.split('.')[1];
-                var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                }).join(''));
 
-                return JSON.parse(jsonPayload);
-            };
-        </script>
-        <script>
-            function handleCredentialResponse(response) {
-            const responsePayload = parseJwt(response.credential);
-        
-            console.log(responsePayload);
-            location.href = "http://localhost:5500/clueless.html"
-            }
-        </script>
-        <style>
-            .center {
-                text-align: center;
-            }
-        </style>
-        <div id="g_id_onload"
-            data-client_id="910371672331-fib9f2k35rt7hbfuhc8boeb4d7hst73h.apps.googleusercontent.com"
-            data-callback="handleCredentialResponse"
+<head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tenacious Turtles Login</title>
+    <link href="/stylesheets/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="/script/main.js"></script>
+
+
+    <div class="logo">
+        <img src="images/turtle.png" alt="Tenacious Turtles Logo" id="turtle_logo">
+        <h1>Tenacious Turtles Clueless Game</h1>
+        <p>Please login with Google.</p>
+    </div>
+
+    <section class="google-sign-in">
+
+        <div id="g_id_onload" data-client_id="910371672331-fib9f2k35rt7hbfuhc8boeb4d7hst73h.apps.googleusercontent.com"
+            data-callback="handleCredentialResponse" data-context="signin" data-ux_mode="popup"
             data-auto_prompt="false">
         </div>
-        <div class="g_id_signin"
-            data-type="standard"
-            data-size="large"
-            data-theme="outline"
-            data-text="sign_in_with"
-            data-shape="rectangular"
-            data-logo_alignment="left">
+
+        <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+            data-shape="rectangular" data-logo_alignment="left">
         </div>
-        <div class="center">
-            <img src="images/turtle.png" alt="Tenacious Turtles Logo" style="width:200px;height:200px;border-radius: 200px;">
-            <h1>Tenacious Turtles Clueless Clue!</h1>
-            <p>Please login with Google<br>using the button in the upper left.</p>
+
+    </section>
+
+    <section class="google-sign-in">
+        <div class="alert alert-warning alert-dismissible" id="login_warning" role="alert">
+
         </div>
-  </body>
+    </section>
+
+
+
+    <!-- The Signed In Modal -->
+    <div class="modal fade" id="signedInModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">You have signed in</h4>
+                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Please select an option below:</p>
+
+                    <div>
+                        <button type="button" class="btn btn-primary" id="startGameBtn">Start a Game</button>
+                    </div>
+                    <div>
+                        <input type="text" class="form-control" id="inputGameCodeText" placeholder="GCODE">
+                    </div>
+                    <div><button type="button" class="btn btn-primary" id="joinGameBtn">Join a Game</button></div>
+                    <div>
+                        <button type="button" class="btn btn-info" id="signOutBtn">Sign out</button>
+                    </div>
+                </div>
+                <div class="alert alert-warning alert-dismissible" role="alert" id="signedInModalError"></div>
+            </div>
+
+            <!-- Modal footer -->
+            <!-- <div class="modal-footer" id="signedInModalFooter">
+                    
+                </div> --> -->
+
+        </div>
+    </div>
+    </div>
+
+</body>
+
 </html>

@@ -1,0 +1,19 @@
+.logo {
+    text-align: center;
+}
+
+.google-sign-in {
+    display: flex;
+    justify-content: center;
+}
+
+#turtle_logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 200px;
+}
+
+#login_warning {
+    display: none;
+    color: red;
+}
