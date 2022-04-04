@@ -7,13 +7,15 @@ from constant import *
 
 class Engine:
     def __init__(self):
-        self.game_state = None
-        self.suspect_names = []
-        self.weapon_names = []
-        self.room_names = []
+        self.suspects = []
+        self.weapons = []
+        self.rooms = []
 
-        self.map = None
-        self.player_ids = []
+        self.map_dict = {}
+        self.players_dict = {}
+
+        self.envolope = None
+        self.game = None
 
     def set_suspect_names(self, suspect_names=None):
         if suspect_names == None:
@@ -25,7 +27,7 @@ class Engine:
                 WHITE,
                 PEACOCK
             ]
-        self.suspect_names = suspect_names
+        self.suspects = [Suspect(suspect_names[i]) for i in range(len(suspect_names))]
 
     def set_weapon_names(self, weapon_names=None):
         if weapon_names == None:
@@ -37,7 +39,7 @@ class Engine:
                 LEAD_PIPE,
                 KNIFE
             ]
-        self.weapon_names = weapon_names
+        self.weapons = [Weapon(weapon_names[i]) for i in range(len(weapon_names))]
         
     def set_room_names(self, room_names=None):
         if room_names == None:
@@ -52,14 +54,16 @@ class Engine:
                 CONSERVATORY,
                 BILLIARD
             ]
-        self.room_names = room_names
+        self.room_names = [Room(room_names[i]) for i in range(len(room_names))]
 
     def set_map(self):
-        map = {}
+        map = self.map
         # create rooms
+        cnt = 0
         for i in [1,3,5]:
             for j in [1,3,5]:
-                map[(i,j)] = Room(self.room_names[i*j-1])
+                map[(i,j)] = self.rooms[cnt]
+                cnt += 1
 
         # create hallways
         for i in [1,3,5]:
@@ -81,18 +85,16 @@ class Engine:
                     map[(j,i)].add_connection(map[(k,i)])
                     map[(k,i)].add_connection(map[(j,i)])
 
-        all_spaces = map.values()
-        return map, all_spaces
-
-    def add_player(self, player_id):
-        self.player_ids.append(player_id)
+    def add_player(self, player_id, suspect_name):
+        self.players_dict[player_id] = Player(player_id, suspect_name)
 
     def deal_cards(self):
         shuffled_suspect_names = random.shuffle(self.suspect_names)
         shuffled_weapon_names = random.shuffle(self.weapon_names)
         shuffled_room_names = random.shuffle(self.room_names)
 
-        envelope = Suggestion(shuffled_suspect_names[0], shuffled_weapon_names[0], shuffled_room_names[0])
+        self.envelope = Suggestion(shuffled_suspect_names[0], shuffled_weapon_names[0], shuffled_room_names[0])
+
         remained_susept_names = shuffled_suspect_names[1:]
         remained_weapon_names = shuffled_weapon_names[1:]
         remained_room_names = shuffled_room_names[1:]
@@ -104,69 +106,45 @@ class Engine:
         for i in range(len(self.player_ids)):
             player_id = self.player_ids[i]
             player_cards = all_card_names[i*card_per_player:(i+1)*card_per_player]
+            self.players_dict[player_id].set_cards(player_cards)
 
-    def finish_setup():        
-        pass
+    def finish_setup(self):      
+        self.set_map()
+        self.deal_cards()  
+        self.game = Game(self.players_dict,self.suspects,self.weapons,self.rooms,self.map_dict,self.envelope)
 
     def start_game():
         pass
 
-    def make_move():
-        pass
+    def move_player(self, player_id, space_x, space_y):
+        if (space_x, space_y) not in self.map_dict:
+            print(ILLEGAL_MOVE)
+            return
 
-    def make_suggestion():
-        pass
+        next_space = self.map_dict[(space_x, space_y)]
+        if next_space.is_occupied():
+            print(ILLEGAL_MOVE)
+            return
 
-    def make_accusation():
-        pass
+        msg = self.game.move_player(player_id, next_space)
+        print(msg)
 
-    def make_suggestion_response():
-        pass
+    def make_suggestion(self, player_id, suspect_name, weapon_name):
+        suspect = Suspect(suspect_name)
+        weapon = Weapon(weapon_name)
+        msg = self.game.make_suggestion(player_id, suspect, weapon)
+        print(msg)
 
-    def make_accusation_response():
-        pass
+    def make_accusation(self, player_id, suspect_name, weapon_name, room_name):
+        suspect = Suspect(suspect_name)
+        weapon = Weapon(weapon_name)
+        room = Room(room_name)
+        msg = self.game.make_accusation(player_id, suspect, weapon, room)
+        print(msg)
 
-    def make_suggestion_response_response():
-        pass
+        if msg == CORRECT_SUGGESTION:
+            self.game.end_game()
 
-    def make_accusation_response_response():
-        pass
-
-    def make_end_turn():
-        pass
-
-    def make_end_game():
-        pass
-
-    def make_disprove_suggestion():
-        pass
-
-    def make_disprove_accusation():
-        pass
-
-    def make_disprove_suggestion_response():
-        pass
-
-    def make_disprove_accusation_response():
-        pass
-
-    def make_disprove_suggestion_response_response():
-        pass
-
-    def make_disprove_accusation_response_response():
-        pass
-
-    def make_disprove_end_turn():
-        pass
-
-    def make_disprove_end_game():
-        pass
-
-    def make_disprove_player_move():
-        pass
-
-    def make_disprove_player_suggestion():
-        pass
-
-    def make_disprove_player_accusation():
+    def end_game(self):
+        print('Game over')
         pass

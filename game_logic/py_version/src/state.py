@@ -70,81 +70,93 @@ class Hallway(Space):
 class Weapon:
     def __init__(self, name):
         self.name = name
+
+    def is_same(self, weapon):
+        return self.name == weapon.name
+
+class Suspect:
+    def __init__(self, name):
+        self.name = name
+
+    def is_same(self, suspect):
+        return self.name == suspect.name
     
 class Player:
-    def __init__(self, player_id, suspect_name, space):
-        self.suspect_name = suspect_name
+    def __init__(self, player_id, suspect_name):
         self.player_id = player_id
-        self.space = space
+        self.suspect_name = suspect_name
+        self.space = None
         self.cards = []
-        self.others_cards = []
+        self.known_others_cards = []
+
+    def set_susept(self, suspect_name):
+        self.suspect_name = suspect_name
 
     def set_cards(self, cards):
         self.cards = cards
 
-    def update_others_cards(self, card):
-        self.others_cards.append(card)
+    def set_space(self, space):
+        self.space = space
+
+    def update_known_others_cards(self, card):
+        self.known_others_cards.append(card)
+
 
 class Suggestion:
-    def __init__(self, suspect_name, weapon_name, room_name):
-        self.suspect_name = suspect_name
-        self.weapon_name = weapon_name
-        self.room_name = room_name
 
+    def __init__(self, suspect, weapon, room):
+        self.suspect = suspect
+        self.weapon = weapon
+        self.room = room
+    
     def is_same(self, suggestion):
-        return self.suspect_name == suggestion.suspect_name and \
-            self.weapon_name == suggestion.weapon_name and \
-            self.room_name == suggestion.room_name
+        return self.suspect.is_same(suggestion.suspect) \
+            and self.weapon.is_same(suggestion.weapon) \
+            and self.room.is_same(suggestion.room)
 
-class GameState:
+class Game:
 
-    def __init__(self, players, suspect_names, weapon_names, room_names, map):
-        self.players = players
-        self.suspect_names = suspect_names
-        self.weapon_names = weapon_names
-        self.room_names = room_names
-        self.map = map
+    def __init__(self, players_dict, suspects, weapons, rooms, map_dict, envolope):
+        self.players_dict = players_dict
+        self.suspect= suspects
+        self.weapon = weapons
+        self.room = rooms
+        self.map_dict = map_dict
+        self.envolope = envolope
 
-        self.set_solution()
-
-    def set_solution(self):
-        self.solution = Suggestion(random.choice(self.suspect_names),
-                                   random.choice(self.weapon_names),
-                                   random.choice(self.room_names))
-
-    # def add_player(self, player):
-    #     self.players.append(player)
-    #     self.suspects.append(player.suspect_name)
-
-    def move_player(self, player, next_space):
+    def move_player(self, player_id, next_space):
+        player = self.players_dict[player_id]
         prev_space = player.space
         prev_space.remove_suspect(player)
         next_space.add_suspect(player)
 
-    def make_suggestion(self, player, suspect, weapon):
+        return f'Moved {player.suspect_name} from {prev_space.name} to {next_space.name}'
+
+    def make_suggestion(self, player_id, suspect, weapon):
+        player = self.players_dict[player_id]
         room = player.space
 
         if not room.is_room():
             return ILLEGAL_MOVE
 
         suggestion = Suggestion(suspect, weapon, room)
-        if suggestion.is_same(self.solution):
+        if suggestion.is_same(self.envolope):
             return CORRECT_SUGGESTION
 
         else:
-            for other_player in self.players:
+            for other_player in self.players_dict.values():
                 other_player_cards = other_player.cards
                 shared_cards = [card for card in other_player_cards if card in [suspect, weapon, room]]
 
                 if len(shared_cards)>0:
                     # Choose a random card to response with
                     selected_shared_card = random.choice(shared_cards)
-                    player.update_others_cards(selected_shared_card)
+                    player.update_known_others_cards(selected_shared_card)
                     return RESPONDED_SUGGESTION
 
             return UNRESPONDED_SUGGESTION
 
-    def make_accusation(self, player, suspect, weapon, room):
+    def make_accusation(self, suspect, weapon, room):
         accusation = Suggestion(suspect, weapon, room)
         if accusation.is_same(self.solution):
             return CORRECT_SUGGESTION
