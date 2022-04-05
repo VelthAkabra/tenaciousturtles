@@ -1,5 +1,3 @@
-from venv import CORE_VENV_DEPS
-
 # constants for moves
 ILLEGAL_MOVE = 'Illegal move'
 
