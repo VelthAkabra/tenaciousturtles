@@ -180,7 +180,7 @@ class Game:
 
     def make_accusation(self, suspect, weapon, room):
         accusation = Suggestion(suspect, weapon, room)
-        if accusation.equals(self.solution):
+        if accusation.equals(self.envolope):
             return CORRECT_SUGGESTION
         else:
             return INCORRECT_SUGGESTION

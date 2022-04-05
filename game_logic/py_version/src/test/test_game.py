@@ -23,6 +23,7 @@ class TestState(unittest.TestCase):
         assert hallway.name == 'hallway'
 
     def test_game(self):
+        # create game
         engine = Engine()
         engine.set_suspect_names()
         engine.set_weapon_names()
@@ -32,8 +33,17 @@ class TestState(unittest.TestCase):
             engine.add_player(player_id, DEFAULT_SUSPECT_NAMES[player_id])
 
         engine.finish_setup()
+
+        # test move player
         engine.move_player(player_id=0, space_x=1, space_y=1)
+
+        # test make suggestion
         engine.make_suggestion(player_id=0, suspect_name=PEACOCK, weapon_name=CANDLESTICK)
+
+        # test correct accusation
+        envolope = engine.game.envolope
+        msg = engine.make_accusation(player_id=0, suspect_name=envolope.suspect.name, weapon_name=envolope.weapon.name, room_name=envolope.room.name)
+        assert msg == CORRECT_SUGGESTION
 
 if __name__ == '__main__':
     unittest.main()

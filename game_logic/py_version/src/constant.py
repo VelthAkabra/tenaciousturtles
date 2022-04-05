@@ -1,11 +1,12 @@
 # constants for moves
 ILLEGAL_MOVE = 'Illegal move'
-SUGGESSTION_FROM_HALLWAY = 'Suggestion from hallway'
+NOT_YOUR_TURN = 'It is not your turn'
 
 CORRECT_SUGGESTION = 'Correct suggestion'
 INCORRECT_SUGGESTION = 'Incorrect suggestion'
 RESPONDED_SUGGESTION = 'Responded suggestion'
 UNRESPONDED_SUGGESTION = 'Unresponded suggestion'
+SUGGESSTION_FROM_HALLWAY = 'Suggestion from hallway'
 
 # constants for suspect names
 GREEN = 'Mr Green'

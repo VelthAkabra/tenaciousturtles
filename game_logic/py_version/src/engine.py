@@ -126,11 +126,11 @@ class Engine:
         suspect = Suspect(suspect_name)
         weapon = Weapon(weapon_name)
         room = Room(room_name)
-        msg = self.game.make_accusation(player_id, suspect, weapon, room)
+        msg = self.game.make_accusation(suspect, weapon, room)
         print(msg)
 
         if msg == CORRECT_SUGGESTION:
-            self.game.end_game()
+            self.end_game()
 
         return msg
 
