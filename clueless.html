@@ -147,6 +147,21 @@
                 });
 
                 carddisplay.appendChild(card);
+        </script>
+        <script>
+            function addPlayerToList(player){
+                var playerlistdiv = document.getElementsByName('playerlist')[0];
+                var newplayer = document.createElement("p");
+                newplayer.innerHTML = player;
+                playerlistdiv.appendChild(newplayer);
+            }
+        </script>
+        <script>
+            function addToLog(text){
+                var textlog = document.getElementsByName('textlog')[0];
+                var newentry = document.createElement("p");
+                newentry.innerHTML = text;
+                textlog.appendChild(newentry);
             }
         </script>
         <div class="center">
@@ -154,8 +169,11 @@
             <p id="gameIDDisplay"></p>
         </div>
         <div class="leftdiv sidebar">
-            <div style="width:300px;height:90px;border:1px solid #000;">
-                <p name="playerlist" style="border:10px">playerlist</p>
+            <div name="playerlist" style="width:300px;height:220px;border:1px solid #000;">
+                
+            </div>
+            <div name="textlog" style="margin-top:10px;height:400px;width:300px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+
             </div>
         </div>
         <div class="middlediv maincolumn">
