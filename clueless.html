@@ -11,9 +11,6 @@
             .leftdiv {
                 float: left;
             }
-            .middlediv {
-                float: left;
-            }
             .rightdiv {
                 float: left;
             }
@@ -22,7 +19,8 @@
                 background-color: 009900;
                 width: 20%;
             }
-            .maincolumn {
+            .middlediv {
+                float:left;
                 padding: 1%;
                 background-color: 009900;
                 width: 54%;
@@ -68,7 +66,7 @@
             }
             .card {
                 text-align:center;
-                width: 98px;
+                width: 13.95%;
                 height: 198px;
                 display:inline-block;
                 margin:0px;
@@ -168,12 +166,12 @@
             <p id="gameIDDisplay"></p>
         </div>
         <div class="leftdiv sidebar">
-            <div name="playerlist" style="width:300px;height:220px;border:1px solid #000;"></div>
-            <div name="textlog" style="margin-top:10px;height:400px;width:300px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;"></div>
+            <div name="playerlist" style="width:100%;height:220px;border:1px solid #000;"></div>
+            <div name="textlog" style="margin-top:10px;height:400px;width:100%;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;"></div>
             <button style="margin-top:20px" name="leave" type="button">Leave Game</button>
             <button style="margin-top:20px" name="start" type="button">Start Game</button>
         </div>
-        <div class="middlediv maincolumn">
+        <div class="middlediv">
             <div style="width:500px;height:500px;border:1px solid #000; margin: auto;">
                 <div class="gameCol">
                     <div class="roomtile" id="tile-00"></div>
@@ -213,12 +211,12 @@
                     <div class="roomtile" id="tile-44"></div>
                 </div>
             </div>
-            <div name="carddisplay" style="margin:auto;margin-top:50px;width:700px;height:200px;border:1px solid #000;">
+            <div name="carddisplay" style="margin:auto;margin-top:50px;width:100%;height:200px;border:1px solid #000;">
 
             </div>
         </div>
-        <div class="rightdiv center sidebar">
-            <div style="width:300px;height:600px;border:1px;"></div>
+        <div class="rightdiv sidebar">
+            <div style="width:100%;height:600px;border:1px;"></div>
             <button style="margin-top:20px" name="accuse" type="button">Accuse</button>
             <button style="margin-top:20px" name="endturn" type="button">End Turn</button>
         </div>
