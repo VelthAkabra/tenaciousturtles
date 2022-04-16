@@ -109,6 +109,8 @@
                         }
                     }
                 }
+
+                addCard("test");
             }
         </script>
         <script>
@@ -134,11 +136,16 @@
             function addCard(name){
                 var carddisplay = document.getElementsByName("carddisplay")[0];
                 var card = document.createElement("div");
-                card.setAttribute("name", name);
+                card.setAttribute("id", name);
                 card.setAttribute("class", "card");
                 var cardtext = document.createElement("p");
                 cardtext.innerHTML = name;
                 card.appendChild(cardtext);
+
+                card.addEventListener('click', function(e){
+                    console.log(e['path'][0]['id']);
+                });
+
                 carddisplay.appendChild(card);
             }
         </script>
