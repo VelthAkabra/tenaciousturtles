@@ -66,25 +66,14 @@
                 margin:0px;
                 padding:0px;
             }
-            .col0{
-                margin-left: 0px;
-                width:90px;
-            }
-            .col1 {
-                margin-left: 100px;
-                width:90px;
-            }
-            .col2 {
-                margin-left: 200px;
-                width:90px;
-            }
-            .col3 {
-                margin-left: 300px;
-                width:90px;
-            }
-            .col4 {
-                margin-left: 400px;
-                width:90px;
+            .card {
+                text-align:center;
+                width: 98px;
+                height: 198px;
+                display:inline-block;
+                margin:0px;
+                padding:0px;
+                border:1px solid #000;
             }
         </style>
         <script>
@@ -139,6 +128,18 @@
                 }
 
                 console.log(tileCoord);
+            }
+        </script>
+        <script>
+            function addCard(name){
+                var carddisplay = document.getElementsByName("carddisplay")[0];
+                var card = document.createElement("div");
+                card.setAttribute("name", name);
+                card.setAttribute("class", "card");
+                var cardtext = document.createElement("p");
+                cardtext.innerHTML = name;
+                card.appendChild(cardtext);
+                carddisplay.appendChild(card);
             }
         </script>
         <div class="center">
@@ -237,6 +238,9 @@
 
                     </div>
                 </div>
+            </div>
+            <div name="carddisplay" style="margin:auto;margin-top:50px;width:700px;height:200px;border:1px solid #000;">
+
             </div>
         </div>
         <div class="rightdiv center sidebar">
