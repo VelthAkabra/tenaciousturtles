@@ -92,6 +92,17 @@ class Engine:
             player_cards = all_cards[i*card_per_player:(i+1)*card_per_player]
             self.players_dict[player_id].set_cards(player_cards)
 
+        # Deal remaining cards if there are any
+        remaining_cards = all_cards[len(player_ids)*card_per_player:]
+        if len(remaining_cards) > 0:
+            for i in range(len(remaining_cards)):
+                player_id = player_ids[i]
+                additional_player_card = remaining_cards[i]
+                player_cards = self.players_dict[player_id].get_cards()
+                complete_player_cards = player_cards + [additional_player_card]
+                self.players_dict[player_id].set_cards(complete_player_cards)
+
+    # start at random location
     def set_all_players_start_space(self):
         all_hallways = [space for space in self.map_dict.values() if isinstance(space, Hallway)]
         random.shuffle(all_hallways)
@@ -133,6 +144,22 @@ class Engine:
             self.end_game()
 
         return msg
+
+    def get_weapon_location(self, weapon_name):
+        return self.game.get_weapon_location(weapon_name)
+
+    def get_suspect_location(self, suspect_name):
+        player = self.suspect2player_dict[suspect_name]
+        return self.get_player_location(player)
+
+    def get_player_location(self, player_id):
+        return self.game.get_player_location(player_id)
+
+    def get_player_cards(self, player_id):
+        return self.game.get_player_cards(player_id)
+
+    def get_player_known_others_cards(self, player_id):
+        return self.game.get_player_known_others_cards(player_id)
 
     def end_game(self):
         print('Game over')

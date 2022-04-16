@@ -96,11 +96,17 @@ class Player:
     def set_cards(self, cards):
         self.cards = cards
 
+    def get_cards(self):
+        return self.cards
+
     def set_space(self, space):
         self.space = space
 
     def update_known_others_cards(self, card):
         self.known_others_cards.append(card)
+
+    def get_known_others_cards(self):
+        return self.known_others_cards
 
 
 class Suggestion:
@@ -120,9 +126,10 @@ class Game:
     def __init__(self, players_dict, suspects, weapons, rooms, map_dict, envolope):
         self.players_dict = players_dict
         self.suspect_name_2_player_dict = {Player.suspect_name: Player for player_id, Player in players_dict.items()}
-        self.suspect= suspects
-        self.weapon = weapons
-        self.room = rooms
+        self.weapon_name_2_space_dict = {weapon.name: None for weapon in weapons}
+        # self.suspects = suspects
+        # self.weapons = weapons
+        # self.rooms = rooms
         self.map_dict = map_dict
         self.envolope = envolope
 
@@ -149,6 +156,24 @@ class Game:
 
         return f'Moved {player.suspect_name} from {prev_space.name} to {next_space.name}'
 
+    def get_player_location(self, player_id):
+        player = self.players_dict[player_id]
+        return player.space.name
+
+    def get_player_cards(self, player_id):
+        player = self.players_dict[player_id]
+        return player.get_cards()
+
+    def get_player_known_others_cards(self, player_id):
+        player = self.players_dict[player_id]
+        return player.get_known_others_cards()
+
+    def get_weapon_location(self, weapon_name):
+        space = self.weapon_name_2_space_dict[weapon_name]
+        if space is None:
+            return None
+        return space.name
+
     def make_suggestion(self, player_id, suspect, weapon):
         player = self.players_dict[player_id]
         room = player.space
@@ -163,8 +188,11 @@ class Game:
             return CORRECT_SUGGESTION
 
         else:
+            # move player
             suggested_player = self.suspect_name_2_player_dict[suspect.name]
             self.move_player(suggested_player.player_id, room)
+            # move weapon
+            self.weapon_name_2_space_dict[weapon.name] = room
 
             for other_player in self.players_dict.values():
                 other_player_cards = other_player.cards
