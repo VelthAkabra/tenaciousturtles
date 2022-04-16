@@ -149,6 +149,14 @@
                 playerlistdiv.appendChild(newplayer);
             }
         </script>
+        <script>
+            function addToLog(text){
+                var textlog = document.getElementsByName('textlog')[0];
+                var newentry = document.createElement("p");
+                newentry.innerHTML = text;
+                textlog.appendChild(newentry);
+            }
+        </script>
         <div class="center">
             <h1>Clueless Clue!</h1>
             <p id="gameIDDisplay"></p>
@@ -157,11 +165,8 @@
             <div name="playerlist" style="width:300px;height:220px;border:1px solid #000;">
                 
             </div>
-            <div style="margin-top:10px;height:400px;width:300px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
-                <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+            <div name="textlog" style="margin-top:10px;height:400px;width:300px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+
             </div>
         </div>
         <div class="middlediv maincolumn">
