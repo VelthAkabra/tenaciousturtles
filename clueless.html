@@ -8,6 +8,84 @@
             .center {
                 text-align: center;
             }
+            .leftdiv {
+                float: left;
+            }
+            .middlediv {
+                float: left;
+            }
+            .rightdiv {
+                float: left;
+            }
+            .sidebar {
+                padding: 1%;
+                background-color: 009900;
+                width: 20%;
+            }
+            .maincolumn {
+                padding: 1%;
+                background-color: 009900;
+                width: 54%;
+            }
+            .tilecol {
+                background-color: 009900;
+                width:33%
+            }
+            .grid-container {
+                display: grid;
+                grid: 100px 100px 100px 100px 100px / 100px 100px 100px 100px 100px;
+                grid-gap: 1px;
+            }
+            .roomtile {
+                width:98px;
+                height:98px;
+                border:1px solid #000;
+            }
+            .verthalltile {
+                width:48px;
+                height:98px;
+                margin-left:25px;
+                margin-right:25px;
+                border:1px solid #000;
+            }
+            .horihalltile {
+                width:98px;
+                height:48px;
+                margin-top:25px;
+                margin-bottom:25px;
+                border:1px solid #000;
+            }
+            .blanktile {
+                width:98px;
+                height:98px;
+                border:1px;
+            }
+            .gameCol {
+                width:96px;
+                display:inline-block;
+                margin:0px;
+                padding:0px;
+            }
+            .col0{
+                margin-left: 0px;
+                width:90px;
+            }
+            .col1 {
+                margin-left: 100px;
+                width:90px;
+            }
+            .col2 {
+                margin-left: 200px;
+                width:90px;
+            }
+            .col3 {
+                margin-left: 300px;
+                width:90px;
+            }
+            .col4 {
+                margin-left: 400px;
+                width:90px;
+            }
         </style>
         <script>
             function getCookie(cname) {
@@ -28,12 +106,143 @@
         </script>
         <script>
             window.onload = function(){
-                document.getElementById('userDisplay').innerHTML = "Your Game Code is " + getCookie('code')
+                document.getElementById('gameIDDisplay').innerHTML = "Your Game Code is " + getCookie('code')
+
+                var anchors = document.getElementsByTagName('div');
+                for(var i = 0; i < anchors.length; i++) {
+                    var anchor = anchors[i];
+                    var id = anchor.getAttribute('id');
+                    if(id != undefined) {
+                        if (id.includes("tile")) {
+                            anchor.onclick = function(e) {
+                                clickRoom(e);
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+        <script>
+            function clickRoom(e) {
+                var badCoords = ['11', '13', '31', '33']
+                
+                var tileName = e['path'][0]['id'];
+                var tileCoord = tileName.split('-')[1];
+
+                var isBad = false;
+                if (badCoords.includes(tileCoord)){
+                    isBad = true;
+                }
+
+                if (isBad){
+                    return;
+                }
+
+                console.log(tileCoord);
             }
         </script>
         <div class="center">
             <h1>Clueless Clue!</h1>
-            <p id="userDisplay"></p>
+            <p id="gameIDDisplay"></p>
+        </div>
+        <div class="leftdiv sidebar">
+            <div style="width:300px;height:90px;border:1px solid #000;">
+                <p name="playerlist" style="border:10px">playerlist</p>
+            </div>
+        </div>
+        <div class="middlediv maincolumn">
+            <div style="width:500px;height:500px;border:1px solid #000; margin: auto;">
+                <div class="gameCol">
+                    <div class="roomtile" id="tile-00"> 
+
+                    </div>
+                    <div class="verthalltile" id="tile-01"> 
+
+                    </div>
+                    <div class="roomtile" id="tile-02"> 
+
+                    </div>
+                    <div class="verthalltile" id="tile-03"> 
+
+                    </div>
+                    <div class="roomtile" id="tile-03"> 
+
+                    </div>
+                </div>
+                <div class="gameCol">
+                    <div class="horihalltile" id="tile-10"> 
+
+                    </div>
+                    <div class="blanktile" id="tile-11"> 
+
+                    </div>
+                    <div class="horihalltile" id="tile-12"> 
+
+                    </div>
+                    <div class="blanktile" id="tile-13"> 
+
+                    </div>
+                    <div class="horihalltile" id="tile-14"> 
+
+                    </div>
+                </div>
+                <div class="gameCol">
+                    <div class="roomtile" id="tile-20"> 
+
+                    </div>
+                    <div class="verthalltile" id="tile-21"> 
+
+                    </div>
+                    <div class="roomtile" id="tile-22"> 
+
+                    </div>
+                    <div class="verthalltile" id="tile-23"> 
+
+                    </div>
+                    <div class="roomtile" id="tile-24"> 
+
+                    </div>
+                </div>
+                <div class="gameCol">
+                    <div class="horihalltile" id="tile-30"> 
+
+                    </div>
+                    <div class="blanktile" id="tile-31"> 
+
+                    </div>
+                    <div class="horihalltile" id="tile-32"> 
+
+                    </div>
+                    <div class="blanktile" id="tile-33"> 
+
+                    </div>
+                    <div class="horihalltile" id="tile-34"> 
+
+                    </div>
+                </div>
+                <div class="gameCol">
+                    <div class="roomtile" id="tile-40"> 
+
+                    </div>
+                    <div class="verthalltile" id="tile-41"> 
+
+                    </div>
+                    <div class="roomtile" id="tile-42"> 
+
+                    </div>
+                    <div class="verthalltile" id="tile-43"> 
+
+                    </div>
+                    <div class="roomtile" id="tile-44"> 
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rightdiv center sidebar">
+            <div style="width:300px;height:90px;border:1px solid #000;">
+
+            </div>
         </div>
     </body>
 </html>
