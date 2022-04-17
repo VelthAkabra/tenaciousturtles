@@ -21,57 +21,60 @@
             }
             .middlediv {
                 float:left;
-                padding: 1%;
                 background-color: 009900;
                 width: 54%;
             }
-            .tilecol {
-                background-color: 009900;
-                width:33%
-            }
-            .grid-container {
-                display: grid;
-                grid: 100px 100px 100px 100px 100px / 100px 100px 100px 100px 100px;
-                grid-gap: 1px;
+            .gameboard {
+                width:50%;
+                margin: auto;
             }
             .roomtile {
-                width:98px;
-                height:98px;
-                border:1px solid #000;
+                width:100%;
+                padding-top:100%;
+                background-color: white;
+                outline: 1px solid black;
             }
             .verthalltile {
-                width:48px;
-                height:98px;
-                margin-left:25px;
-                margin-right:25px;
-                border:1px solid #000;
+                width:50%;
+                padding-top:100%;
+                margin-left:25%;
+                margin-right:25%;
+                background-color: white;
+                outline: 1px solid black;
             }
             .horihalltile {
-                width:98px;
-                height:48px;
-                margin-top:25px;
-                margin-bottom:25px;
-                border:1px solid #000;
+                width:100%;
+                padding-top:50%;
+                margin-top:25%;
+                margin-bottom:25%;
+                background-color: white;
+                outline: 1px solid black;
             }
             .blanktile {
-                width:98px;
-                height:98px;
-                border:1px;
+                width:100%;
+                padding-top:100%;
             }
             .gameCol {
-                width:96px;
+                width:20%;
                 display:inline-block;
                 margin:0px;
                 padding:0px;
+                border:0px;
+            }
+            .carddisplay {
+                margin:auto;
+                margin-top:5%;
+                margin-bottom:5%;
+                width:80%;
+                height: 200px;
+                border:1px solid #000;
             }
             .card {
                 text-align:center;
-                width: 13.95%;
-                height: 198px;
+                width: 14.28%;
+                height: 100%;
                 display:inline-block;
-                margin:0px;
-                padding:0px;
-                border:1px solid #000;
+                outline: 1px solid black;
             }
         </style>
         <script>
@@ -107,6 +110,14 @@
                         }
                     }
                 }
+
+                addCard("test");
+                addCard("test");
+                addCard("test");
+                addCard("test");
+                addCard("test");
+                addCard("test");
+                addCard("test");
             }
         </script>
         <script>
@@ -172,38 +183,34 @@
             <button style="margin-top:20px" name="start" type="button">Start Game</button>
         </div>
         <div class="middlediv">
-            <div style="width:500px;height:500px;border:1px solid #000; margin: auto;">
+            <div class="gameboard">
                 <div class="gameCol">
-                    <div class="roomtile" id="tile-00"></div>
+                    <div class="roomtile" id="tile-00">
+                        test
+                    </div>
                     <div class="verthalltile" id="tile-01"></div>
                     <div class="roomtile" id="tile-02"></div>
                     <div class="verthalltile" id="tile-03"></div>
                     <div class="roomtile" id="tile-03"></div>
-                </div>
-                <div class="gameCol">
+                </div><div class="gameCol">
                     <div class="horihalltile" id="tile-10"></div>
                     <div class="blanktile" id="tile-11"></div>
                     <div class="horihalltile" id="tile-12"></div>
                     <div class="blanktile" id="tile-13"></div>
-                    <div class="horihalltile" id="tile-14"> 
-
-                    </div>
-                </div>
-                <div class="gameCol">
+                    <div class="horihalltile" id="tile-14"></div>
+                </div><div class="gameCol">
                     <div class="roomtile" id="tile-20"></div>
                     <div class="verthalltile" id="tile-21"></div>
                     <div class="roomtile" id="tile-22"></div>
                     <div class="verthalltile" id="tile-23"></div>
                     <div class="roomtile" id="tile-24"></div>
-                </div>
-                <div class="gameCol">
+                </div><div class="gameCol">
                     <div class="horihalltile" id="tile-30"></div>
                     <div class="blanktile" id="tile-31"></div>
                     <div class="horihalltile" id="tile-32"></div>
                     <div class="blanktile" id="tile-33"></div>
                     <div class="horihalltile" id="tile-34"></div>
-                </div>
-                <div class="gameCol">
+                </div><div class="gameCol">
                     <div class="roomtile" id="tile-40"></div>
                     <div class="verthalltile" id="tile-41"></div>
                     <div class="roomtile" id="tile-42"></div>
@@ -211,7 +218,7 @@
                     <div class="roomtile" id="tile-44"></div>
                 </div>
             </div>
-            <div name="carddisplay" style="margin:auto;margin-top:50px;width:100%;height:200px;border:1px solid #000;">
+            <div class="carddisplay" name="carddisplay">
 
             </div>
         </div>
