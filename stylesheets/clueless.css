@@ -1,0 +1,119 @@
+.center {
+    text-align: center;
+}
+
+.leftdiv {
+    float: left;
+}
+
+.rightdiv {
+    float: left;
+}
+
+.sidebar {
+    padding: 1%;
+    background-color: 009900;
+    width: 20%;
+}
+
+.middlediv {
+    float: left;
+    background-color: 009900;
+    width: 55%;
+}
+
+.gameboard {
+    width: 55%;
+    margin: auto;
+}
+
+.roomtile {
+    width: 100%;
+    /* padding-top: 100%; */
+    background-color: white;
+    outline: 1px solid black;
+}
+
+.verthalltile {
+    width: 50%;
+    /* padding-top: 100%; */
+    margin-left: 25%;
+    margin-right: 25%;
+    background-color: white;
+    outline: 1px solid black;
+}
+
+.horihalltile {
+    width: 100%;
+    /* padding-top: 50%; */
+    margin-top: 25%;
+    margin-bottom: 25%;
+    background-color: white;
+    outline: 1px solid black;
+}
+
+.blanktile {
+    width: 100%;
+    /* padding-top: 100%; */
+}
+
+.gameCol {
+    width: 19%;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
+
+.carddisplay {
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 80%;
+    height: 200px;
+    border: 1px solid #000;
+}
+
+.playercard {
+    text-align: center;
+    width: 14.28%;
+    height: 100%;
+    display: inline-block;
+    outline: 1px solid black;
+}
+
+.spacecontent {
+    float: left;
+    line-height: 1em;
+}
+
+.dot {
+    float:left;
+    font-size: 3em;
+    line-height: .5em;
+    width: 15%;
+}
+
+.dot.red {
+    color: red;
+}
+
+.dot.yellow {
+    color: yellowgreen;
+}
+
+.dot.white {
+    color: brown;
+}
+
+.dot.green {
+    color: green;
+}
+
+.dot.blue {
+    color: blue;
+}
+
+.dot.plum {
+    color: plum;
+}
