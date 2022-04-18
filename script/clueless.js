@@ -7,76 +7,41 @@ const ClassicCharacterNames = ['Miss Scarlett', 'Colonel Mustard',
 const tokenColors = ['red', 'yellow', 'white', 'green', 'blue', 'plum'];
 
 var player_obj_list = [];
-var hubURL = "https://clue-app-service-windows.azurewebsites.net/gameSessionHub";
 
-var connection = new signalR.HubConnectionBuilder().withUrl(hubURL, options => {
-    options.UseDefaultCredentials = true;
-}).build();
+var hubURL = "https://clue-app-service-windows.azurewebsites.net/gameSessionHub";
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl(hubURL).configureLogging(signalR.LogLevel.Information).build();
+connection.onclose(async () => {
+    await connectToHub();
+});
+    
+connection.on("PlayerJoinedGame", function (message) {
+    console.log(message);
+});
+
+connection.on("PlayerSelectedCharacter", function (message) {
+    console.log(message);
+});
+
+connection.on("PlayerDeselectedCharacter", function (message) {
+    console.log(message);
+});
 
 async function connectToHub() {
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
 
-
-
-
-    var gameId = sessionStorage.getItem('gameId');
-
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl(hubURL)
-        .configureLogging(signalR.LogLevel.Information)
-        .build();
-
-    async function start() {
-        try {
-            await connection.start();
-            console.log("SignalR Connected.");
-        } catch (err) {
-            console.log(err);
-            setTimeout(start, 5000);
-        }
-    };
-
-    connection.onclose(async () => {
-        await start();
-    });
-
-    // Start the connection.
-    start();
-
-    // try {
-    //     await connection.start();
-    //     console.log("SignalR Connected.");
-    // } catch (err) {
-    //     console.log(err);
-    //     setTimeout(start, 5000);
-    // }
-
-    // connection.start()
-    // // .then(res => {
-    // //     connection.invoke("JoinGameSessionEvents", gameId)
-    // //         .then(msg => {
-    // //             console.log(msg);
-    // //         })
-    // //         .catch(err => {
-    // //             console.error(err);
-    // //         });
-    // // })
-    // .catch(err => {
-    //     console.error(err);
-    // });;
-
-    // var connection = $.hubConnection();
-    // var contosoChatHubProxy = connection.createHubProxy('contosoChatHub');
-    // contosoChatHubProxy.server.JoinGameSessionEvents(gameId);
-
-
-    // connection.on("PlayerJoinedGame", function (user, message) {
-    //     console.log(user);
-    //     console.log(message);
-    // });
+        var gameId = sessionStorage.getItem('gameId');
+        await connection.invoke("JoinGameSessionEvents", gameId);
+        console.log("JoinGameSessionEvents has been invoked.");
+    } catch (err) {
+        console.log(err);
+        setTimeout(start, 5000);
+    }
 }
 
 function isRoom(coordinates) {
-
     let spaceTileID = 'tile-' + coordinates[0] + coordinates[1];
     let spaceElement = document.getElementById(spaceTileID);
 
@@ -86,9 +51,7 @@ function isRoom(coordinates) {
             return true;
         }
     }
-
     return false;
-
 }
 
 function isHallway(coordinates) {
