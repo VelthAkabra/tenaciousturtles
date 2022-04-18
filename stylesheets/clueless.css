@@ -4,10 +4,16 @@
 
 .leftdiv {
     float: left;
+    width: 23%;
+    /* border: 1px solid red; */
+
 }
 
 .rightdiv {
     float: left;
+    width: 23%;
+    /* border: 1px solid red; */
+
 }
 
 .sidebar {
@@ -19,12 +25,15 @@
 .middlediv {
     float: left;
     background-color: 009900;
-    width: 55%;
+    width: 54%;
+    /* border: 1px solid red; */
 }
 
 .gameboard {
     width: 55%;
     margin: auto;
+    margin-top: 10px;
+    white-space: nowrap;
 }
 
 .roomtile {
@@ -32,6 +41,7 @@
     /* padding-top: 100%; */
     background-color: white;
     outline: 1px solid black;
+    white-space: normal;
 }
 
 .verthalltile {
@@ -41,6 +51,22 @@
     margin-right: 25%;
     background-color: white;
     outline: 1px solid black;
+    white-space: normal;
+}
+
+.spacecontent_texts {
+    /* margin-top: 0px;
+    /* text-align: center; */
+    margin-bottom: 15%;
+    /* padding-left: 2%; */
+}
+
+.spacecontent_dots {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 0px;
+    padding: 0px;
+    /* text-align: center; */
 }
 
 .horihalltile {
@@ -50,6 +76,7 @@
     margin-bottom: 25%;
     background-color: white;
     outline: 1px solid black;
+    white-space: normal;
 }
 
 .blanktile {
@@ -62,21 +89,42 @@
     display: inline-block;
     margin: 0px;
     padding: 0px;
-    border: 0px;
 }
 
-.carddisplay {
+#yourcards_box{
     margin: auto;
     margin-top: 5%;
     margin-bottom: 5%;
-    width: 80%;
-    height: 200px;
+
+    width: 90%;
+}
+
+#extracards_box{
+    margin: auto;
+    /* margin-bottom: 5%; */
+
+    width: 100%;
+}
+
+.yourcarddisplay {
+    border: 1px solid #000;
+}
+
+.extracarddisplay {
     border: 1px solid #000;
 }
 
 .playercard {
     text-align: center;
-    width: 14.28%;
+    width: 16.66%;
+    height: 100%;
+    display: inline-block;
+    outline: 1px solid black;
+}
+
+.extracard {
+    text-align: center;
+    width: 33.33%;
     height: 100%;
     display: inline-block;
     outline: 1px solid black;
@@ -88,32 +136,61 @@
 }
 
 .dot {
-    float:left;
-    font-size: 3em;
-    line-height: .5em;
-    width: 15%;
+    float: left;
+    /* font-size: 2em; */
+    /* line-height: ; */
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+
+    /* margin: 0px;
+    padding: 0px; */
 }
 
 .dot.red {
-    color: red;
+    background-color: red;
 }
 
 .dot.yellow {
-    color: yellowgreen;
+    background-color: yellow;
+    border: 1px solid black;
 }
 
 .dot.white {
-    color: brown;
+    background-color: white;
+    border: 1px solid black;
 }
 
 .dot.green {
-    color: green;
+    background-color: green;
 }
 
 .dot.blue {
-    color: blue;
+    background-color: blue;
 }
 
 .dot.plum {
-    color: plum;
+    background-color: plum;
+}
+
+#playerlist_box {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #000;
+    margin: auto;
+    overflow-y: auto;
+}
+
+#textlog_box {
+    margin-top: 10px;
+    /* height: 400px; */
+    width: 100%;
+    border: 1px solid #ccc;
+    font: 16px/26px Georgia, Garamond, Serif;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+}
+
+.btn {
+    margin-top: 5%;
 }

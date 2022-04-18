@@ -6,6 +6,11 @@ function signOut() {
 }
 
 $(document).on('show.bs.modal', '#signedInModal', function () {
+
+    $('.modal-dialog').draggable({
+        "handle": ".modal-header"
+    });
+
     $("#signedInModalError").hide();
 
     let accessToken = getCookie('accessToken');
@@ -16,6 +21,7 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
         return;
     });
 
+    // Create a Game Session
     $("#startGameBtn").click(function () {
 
         if (accessToken == false) {
@@ -54,8 +60,13 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
         }).then((response_json) => {
             if (response_json.id && response_json.code) {
                 console.log("Game ID and Code returned after POST");
-                setCookie('id', response_json.id);
-                setCookie('code', response_json.code);
+                // setCookie('id', response_json.id);
+                // setCookie('code', response_json.code);
+
+                sessionStorage.setItem('gameCode', response_json.code);
+                sessionStorage.setItem('playerType', 'host');
+
+
                 window.location.href = '/clueless.html';
             }
             else {
@@ -69,7 +80,7 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
     });
 
 
-
+    // Join a Game Session
     $("#joinGameBtn").click(function () {
 
         if (accessToken == false) {
@@ -118,8 +129,12 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
         }).then((response_json) => {
             if (response_json.id && response_json.code) {
                 console.log("Game ID and Code returned after POST");
-                setCookie('id', response_json.id);
-                setCookie('code', response_json.code);
+                // setCookie('id', response_json.id);
+                // setCookie('code', response_json.code);
+
+                sessionStorage.setItem('gameCode', response_json.code);
+                sessionStorage.setItem('playerType', 'joined');
+
                 window.location.href = '/clueless.html';
             }
             else {
@@ -135,13 +150,18 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
 
 
 // function signedInBtns() {
-    
+
 // }
 
 
 $(document).ready(function () {
     // $("#signedInModal").modal('show');
     $("#login_warning").hide();
+
+    sessionStorage.removeItem('gameCode');
+    sessionStorage.removeItem('playerType');
+
+
     if (getCookie('accessToken')) {
         $("#signedInModal").modal('show');
     }
@@ -152,16 +172,6 @@ $(document).ready(function () {
     // signedInBtns();
 });
 
-
-function parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-};
 
 function handleCredentialResponse(response) {
 

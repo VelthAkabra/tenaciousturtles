@@ -17,125 +17,242 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-    
+
     <script src="/script/utilities.js"></script>
+    <script src="/script/classes.js"></script>
     <script src="/script/clueless.js"></script>
 
-    
+
     <div class="center">
         <h1>Clueless Clue!</h1>
         <p id="gameIDDisplay"></p>
     </div>
     <div class="leftdiv sidebar">
-        <div name="playerlist" style="width:100%;height:220px;border:1px solid #000;"></div>
-        <div name="textlog" style="margin-top:10px;height:400px;width:100%;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;"></div>
-        <button style="margin-top:20px" name="leave" type="button">Leave Game</button>
-        <button style="margin-top:20px" name="start" type="button">Start Game</button>
+        <div id="playerlist_box"></div>
+        <div id="textlog_box">
+        </div>
+        <button class="btn btn-success d-none disabled" id="start_btn" type="button">Start Game</button>
+        <button class="btn btn-warning" id="leave_btn" type="button">Leave Game</button>
     </div>
     <div class="middlediv">
         <div class="gameboard">
             <div class="gameCol">
                 <div class="roomtile" id="tile-00">
-                    <div class="spacecontent">Study Room</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Study Room
+                        </p>
+                    </div>
                 </div>
                 <div class="verthalltile" id="tile-01">
-                    <div class="spacecontent">Way 1</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 1
+                        </p>
+                    </div>
                 </div>
                 <div class="roomtile" id="tile-02">
-                    <div class="spacecontent">Library</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Library
+                        </p>
+                    </div>
                 </div>
                 <div class="verthalltile" id="tile-03">
-                    <div class="spacecontent">Way 2</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 2
+                        </p>
+                    </div>
                 </div>
                 <div class="roomtile" id="tile-03">
-                    <div class="spacecontent">Conser- vatory
-                        <em class="dot red">.</em>
-                        <em class="dot yellow">.</em>
-                        <em class="dot white">.</em>
-                        <em class="dot green">.</em>
-                        <em class="dot blue">.</em>
-                        <em class="dot plum">.</em>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Conser- vatory
+                        </p>
+
+                        <div class="spacecontent_dots">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot white"></div>
+                            <div class="dot green"></div>
+                            <div class="dot blue"></div>
+                            <div class="dot plum"></div>
+                        </div>
+
                     </div>
 
                 </div>
             </div>
             <div class="gameCol">
                 <div class="horihalltile" id="tile-10">
-                    <div class="spacecontent">Way 3</div>
+                    <div class="spacecontent">
+                        <div class="spacecontent_texts">
+                            Way 3
+                        </div>
+                        <div class="spacecontent_dots">
+                            <div class="dot red"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="blanktile" id="tile-11">
                 </div>
                 <div class="horihalltile" id="tile-12">
-                    <div class="spacecontent">Way 4</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 4
+                        </p>
+                    </div>
                 </div>
                 <div class="blanktile" id="tile-13">
                 </div>
                 <div class="horihalltile" id="tile-14">
-                    <div class="spacecontent">Way 5</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 5
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="gameCol">
                 <div class="roomtile" id="tile-20">
-                    <div class="spacecontent">Hall</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Hall
+                        </p>
+                    </div>
                 </div>
                 <div class="verthalltile" id="tile-21">
-                    <div class="spacecontent">Way 6</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 6
+                        </p>
+                        <div class="spacecontent_dots">
+                            <div class="dot green"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="roomtile" id="tile-22">
-                    <div class="spacecontent">Billiard Room</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Billiard Room
+                        </p>
+                    </div>
                 </div>
                 <div class="verthalltile" id="tile-23">
-                    <div class="spacecontent">Way 7</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 7
+                        </p>
+                    </div>
                 </div>
                 <div class="roomtile" id="tile-24">
-                    <div class="spacecontent">Ballroom</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Ballroom
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="gameCol">
                 <div class="horihalltile" id="tile-30">
-                    <div class="spacecontent">Way 8</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 8
+                        </p>
+                    </div>
                 </div>
                 <div class="blanktile" id="tile-31"></div>
                 <div class="horihalltile" id="tile-32">
-                    <div class="spacecontent">Way 9</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 9
+                        </p>
+                    </div>
                 </div>
                 <div class="blanktile" id="tile-33"></div>
                 <div class="horihalltile" id="tile-34">
-                    <div class="spacecontent">Way 10</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 10
+                        </p>
+                    </div>
                 </div>
             </div>
             <div class="gameCol">
                 <div class="roomtile" id="tile-40">
-                    <div class="spacecontent">Lounge</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Lounge
+                        </p>
+                    </div>
                 </div>
                 <div class="verthalltile" id="tile-41">
-                    <div class="spacecontent">Way 11</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 11
+                        </p>
+                    </div>
                 </div>
                 <div class="roomtile" id="tile-42">
-                    <div class="spacecontent">Dining Room</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Dining Room
+                        </p>
+                    </div>
                 </div>
                 <div class="verthalltile" id="tile-43">
-                    <div class="spacecontent">Way 12</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Way 12
+                        </p>
+                    </div>
                 </div>
                 <div class="roomtile" id="tile-44">
-                    <div class="spacecontent">Kitchen</div>
+                    <div class="spacecontent">
+                        <p class="spacecontent_texts">
+                            Kitchen
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="carddisplay" name="carddisplay">
+        <div id="yourcards_box">
+            <h5>
+                Your Cards:
+            </h5>
+            <div class="yourcarddisplay" id="your_card_display">
 
+            </div>
         </div>
+
     </div>
     <div class="rightdiv sidebar">
-        <div style="width:100%;height:600px;border:1px;"></div>
-        <button style="margin-top:20px" name="accuse" type="button">Accuse</button>
-        <button style="margin-top:20px" name="endturn" type="button">End Turn</button>
+
+        <div id="extracards_box">
+            <h5>
+                Extra Cards:
+            </h5>
+            <div class="extracarddisplay" id="extra_card_display">
+
+            </div>
+        </div>
+
+        <div id="rightdiv_placeholder_box"></div>
+        <button class="btn btn-primary disabled" name="accuse" type="button">Make an Accusation</button>
+        <br>
+        <button class="btn btn-dark disabled" name="endturn" type="button">End Turn</button>
     </div>
+
+    <div id="ModalsToInclude"></div>
 </body>
+
 </html>
