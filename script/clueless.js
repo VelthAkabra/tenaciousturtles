@@ -4,8 +4,115 @@ const ClassicRoomNames = ['Study Room', 'Library', 'Conservatory', 'Hall',
 const ClassicCharacterNames = ['Miss Scarlett', 'Colonel Mustard',
     'Mrs. White', 'Mr. Green', 'Mrs. Peacock', 'Professor Plum'];
 
-var player_obj_list = [];
+const tokenColors = []
 
+var player_obj_list = ['red', 'yellow', 'white', 'green', 'blue', 'plum'];
+
+
+function connectToHub() {
+    hubURL = "https://clue-app-service-windows.azurewebsites.net/api/gameSessionHub";
+    var connection = new signalR.HubConnectionBuilder().withUrl(hubURL).build();
+
+    var gameId = sessionStorage.getItem('gameId');
+
+    connection.start().then(res => {
+        connection.invoke("JoinGameSessionEvents", gameId)
+            .then(msg => {
+                console.log(msg);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }).catch(err => {
+        console.error(err);
+    });;
+
+    connection.on("PlayerJoinedGame", function (user, message) {
+        console.log(user);
+        console.log(message);
+    });
+}
+
+function isRoom(coordinates) {
+
+    let spaceTileID = 'tile-' + coordinates[0] + coordinates[1];
+    let spaceElement = document.getElementById(spaceTileID);
+
+    if (typeof (spaceElement) != 'undefined' && spaceElement != null) {
+
+        if (spaceElement.classList.contains('roomtile')) {
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
+function isHallway(coordinates) {
+
+    let spaceTileID = 'tile-' + coordinates[0] + coordinates[1];
+    let spaceElement = document.getElementById(spaceTileID);
+
+    if (typeof (spaceElement) != 'undefined' && spaceElement != null) {
+
+        if (spaceElement.classList.contains('verthalltile') ||
+            spaceElement.classList.contains('horihalltile')) {
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
+function addToken(color, coordinates) {
+
+    if ( (!isHallway(coordinates)) && (!isRoom(coordinates)) ) {
+        console.error('addToken: invalid coordinates ' + JSON.stringify(coordinates));
+        return false;
+    }
+    let dotsDivID = 'space_dots-' + coordinates[0] + coordinates[1];
+    let dotsDivElement = document.getElementById(dotsDivID);
+
+    if (typeof (dotsDivElement) != 'undefined' && dotsDivElement != null) {
+
+        if (dotsDivElement.querySelector(".dot." + color)) {
+            console.log(color + " dot exists in " + dotsDivID);
+            return true;
+        }
+
+        else if(isHallway(coordinates) && dotsDivElement.querySelector(".dot")) {
+            console.error('addToken: Hallway occupied ' + JSON.stringify(coordinates));
+            return false;
+        }
+        else {
+            //alert(color + "dot does not exist");
+
+            let dotDiv = document.createElement("div");
+            dotDiv.setAttribute("class", "dot " + color);
+            dotsDivElement.appendChild(dotDiv);
+
+            return true;
+        }
+    }
+
+    else {
+        dotsDivElement = document.createElement("div");
+        dotsDivElement.setAttribute("class", "spacecontent_dots");
+        dotsDivElement.setAttribute("id", dotsDivID);
+
+        let parentTileElement = document.getElementById('tile-' + coordinates[0] + coordinates[1]);
+        parentTileElement.appendChild(dotsDivElement);
+
+        let dotDiv = document.createElement("div");
+        dotDiv.setAttribute("class", "dot " + color);
+        dotsDivElement.appendChild(dotDiv);
+
+        return true;
+
+    }
+}
 
 function clickRoom(e) {
     var badCoords = ['11', '13', '31', '33']
@@ -57,11 +164,19 @@ function addExtraCard(name) {
     carddisplay.appendChild(card);
 }
 
-function addPlayerToList(player) {
+function addPlayerToList(player_name, color = 'black', index = 9) {
     var playerlistdiv = document.getElementById('playerlist_box');
     var newplayer = document.createElement("div");
-    newplayer.innerHTML = player;
+    newplayer.setAttribute("id", "player_entry-" + index);
+    if (color !== 'black') {
+        newplayer.innerHTML = '<div class="dot ' + color + '"></div>' + player_name;
+    }
+    else {
+        newplayer.innerHTML = player_name;
+    }
+    // newplayer.style.color = color;
     playerlistdiv.appendChild(newplayer);
+    return newplayer;
 }
 
 function addToLog(text) {
@@ -126,6 +241,7 @@ window.onload = function () {
 
     $("#ModalsToInclude").load("./clueless_modals.partial");
 
+    // connectToHub();
 
     // Clickable Areas - Will be replaced
 
@@ -155,28 +271,21 @@ window.onload = function () {
     addExtraCard("Mr.Green");
     addExtraCard("Mr.Green");
 
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
-    addToLog("dafasdfasdfdsaljflasdjf;ldsajf;lsadjf;ldsajfsa;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
+    addToLog("dafasdfasdfdsaljflasd jf;ldsajf;lsadjf ;ldsajfsa ;ldjfkldsajflkdsajfldsakjflsakdjaldsf");
 
 
-
-    addPlayerToList("Mr. Green");
-    addPlayerToList("Mr. Green");
-    addPlayerToList("Mr. Green");
+    addPlayerToList("Mr. Green", 'plum');
+    addPlayerToList("Mr. Green", 'yellow');
+    addPlayerToList("Mr. Green", 'white');
     addPlayerToList("Mr. Plum");
     addPlayerToList("Colonel Mustard");
     addPlayerToList("Miss Scarlett");
+
+    addToken('yellow', [0, 2]);
+    addToken('red', [1,0]);
+    addToken('red', [1,1]);
+    addToken('red', [2,2]);
+    addToken('red', [2,3]);
+    addToken('red', [2,2]);
+
 }

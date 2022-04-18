@@ -63,7 +63,9 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
                 // setCookie('id', response_json.id);
                 // setCookie('code', response_json.code);
 
+                console.log(response_json);
                 sessionStorage.setItem('gameCode', response_json.code);
+                sessionStorage.setItem('gameId', response_json.id);
                 sessionStorage.setItem('playerType', 'host');
 
 
@@ -74,6 +76,7 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
             }
         }).catch((error) => {
             console.error('Error: ', error);
+
             $("#signedInModalError").html("Start Game Failed.");
             $("#signedInModalError").fadeIn(300);
         });
@@ -133,6 +136,8 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
                 // setCookie('code', response_json.code);
 
                 sessionStorage.setItem('gameCode', response_json.code);
+                sessionStorage.setItem('gameId', response_json.id);
+
                 sessionStorage.setItem('playerType', 'joined');
 
                 window.location.href = '/clueless.html';
