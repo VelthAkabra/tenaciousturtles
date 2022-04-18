@@ -7,30 +7,72 @@ const ClassicCharacterNames = ['Miss Scarlett', 'Colonel Mustard',
 const tokenColors = ['red', 'yellow', 'white', 'green', 'blue', 'plum'];
 
 var player_obj_list = [];
+var hubURL = "https://clue-app-service-windows.azurewebsites.net/gameSessionHub";
+
+var connection = new signalR.HubConnectionBuilder().withUrl(hubURL, options => {
+    options.UseDefaultCredentials = true;
+}).build();
+
+async function connectToHub() {
 
 
-function connectToHub() {
-    hubURL = "https://clue-app-service-windows.azurewebsites.net/api/gameSessionHub";
-    var connection = new signalR.HubConnectionBuilder().withUrl(hubURL).build();
+
 
     var gameId = sessionStorage.getItem('gameId');
 
-    connection.start().then(res => {
-        connection.invoke("JoinGameSessionEvents", gameId)
-            .then(msg => {
-                console.log(msg);
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }).catch(err => {
-        console.error(err);
-    });;
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl(hubURL)
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
 
-    connection.on("PlayerJoinedGame", function (user, message) {
-        console.log(user);
-        console.log(message);
+    async function start() {
+        try {
+            await connection.start();
+            console.log("SignalR Connected.");
+        } catch (err) {
+            console.log(err);
+            setTimeout(start, 5000);
+        }
+    };
+
+    connection.onclose(async () => {
+        await start();
     });
+
+    // Start the connection.
+    start();
+
+    // try {
+    //     await connection.start();
+    //     console.log("SignalR Connected.");
+    // } catch (err) {
+    //     console.log(err);
+    //     setTimeout(start, 5000);
+    // }
+
+    // connection.start()
+    // // .then(res => {
+    // //     connection.invoke("JoinGameSessionEvents", gameId)
+    // //         .then(msg => {
+    // //             console.log(msg);
+    // //         })
+    // //         .catch(err => {
+    // //             console.error(err);
+    // //         });
+    // // })
+    // .catch(err => {
+    //     console.error(err);
+    // });;
+
+    // var connection = $.hubConnection();
+    // var contosoChatHubProxy = connection.createHubProxy('contosoChatHub');
+    // contosoChatHubProxy.server.JoinGameSessionEvents(gameId);
+
+
+    // connection.on("PlayerJoinedGame", function (user, message) {
+    //     console.log(user);
+    //     console.log(message);
+    // });
 }
 
 function isRoom(coordinates) {
@@ -68,12 +110,12 @@ function isHallway(coordinates) {
 
 function addToken(color, coordinates) {
 
-    if ( !tokenColors.includes(color)) {
+    if (!tokenColors.includes(color)) {
         console.error('addToken: invalid color: ' + color);
         return false;
     }
 
-    if ( (!isHallway(coordinates)) && (!isRoom(coordinates)) ) {
+    if ((!isHallway(coordinates)) && (!isRoom(coordinates))) {
         console.error('addToken: invalid coordinates ' + JSON.stringify(coordinates));
         return false;
     }
@@ -87,7 +129,7 @@ function addToken(color, coordinates) {
             return true;
         }
 
-        else if(isHallway(coordinates) && dotsDivElement.querySelector(".dot")) {
+        else if (isHallway(coordinates) && dotsDivElement.querySelector(".dot")) {
             console.error('addToken: Hallway occupied ' + JSON.stringify(coordinates));
             return false;
         }
@@ -246,7 +288,7 @@ window.onload = function () {
 
     $("#ModalsToInclude").load("./clueless_modals.partial");
 
-    // connectToHub();
+    connectToHub();
 
     // Clickable Areas - Will be replaced
 
@@ -287,10 +329,10 @@ window.onload = function () {
     addPlayerToList("Miss Scarlett");
 
     addToken('yellow', [0, 2]);
-    addToken('red', [1,0]);
-    addToken('red', [1,1]);
-    addToken('red', [2,2]);
-    addToken('red', [2,3]);
-    addToken('red', [2,2]);
+    addToken('red', [1, 0]);
+    addToken('red', [1, 1]);
+    addToken('red', [2, 2]);
+    addToken('red', [2, 3]);
+    addToken('red', [2, 2]);
 
 }
