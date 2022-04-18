@@ -4,9 +4,9 @@ const ClassicRoomNames = ['Study Room', 'Library', 'Conservatory', 'Hall',
 const ClassicCharacterNames = ['Miss Scarlett', 'Colonel Mustard',
     'Mrs. White', 'Mr. Green', 'Mrs. Peacock', 'Professor Plum'];
 
-const tokenColors = []
+const tokenColors = ['red', 'yellow', 'white', 'green', 'blue', 'plum'];
 
-var player_obj_list = ['red', 'yellow', 'white', 'green', 'blue', 'plum'];
+var player_obj_list = [];
 
 
 function connectToHub() {
@@ -67,6 +67,11 @@ function isHallway(coordinates) {
 }
 
 function addToken(color, coordinates) {
+
+    if ( !tokenColors.includes(color)) {
+        console.error('addToken: invalid color: ' + color);
+        return false;
+    }
 
     if ( (!isHallway(coordinates)) && (!isRoom(coordinates)) ) {
         console.error('addToken: invalid coordinates ' + JSON.stringify(coordinates));
