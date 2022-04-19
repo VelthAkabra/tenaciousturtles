@@ -34,8 +34,8 @@ connection.on("PlayerJoinedGame", function (message) {
     var new_player = new Player(playerId);
     player_obj_list.push(new_player);
 
-    addPlayerToList(playerId, userDisplayName, 'black');
-    addToLog('Player "' + playerId +'" has joined the game session.');
+    addPlayerToList(playerId, 'Player ' + playerId, 'black');
+    addToLog('Player ' + playerId +' has joined the game session.');
 
 });
 
@@ -58,7 +58,32 @@ connection.on("PlayerSelectedCharacter", function (message) {
     addToLog('Character "' + playerCharName +'" has been selected by player '+ playerId + '.');
     
     modifyPlayerOnList(playerId, playerCharName, playerCharColor);
+    addToken(playerCharColor, [2,2]);
+    updatePlayerInObjList(playerId, playerCharName, playerCharColor);
+
 });
+
+function addTokenByPlayerObj(player) {
+    if (player instanceof Player) {
+        var tokenColor = player.getToken().getColor();
+
+        if (tokenColor && tokenColor != 'black') {
+            addToken(tokenColor, player.getToken().getCoordinates());
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function updatePlayerInObjList(playerId, newCharName, newCharColor) {
+    player_obj_list.forEach(player => {
+        if (player.getId() == playerId) {
+            player.setName(newCharName);
+            player.setTokenColor(newCharColor);
+        }
+    });
+}
 
 function deleteAvailChar(playerId, characterId) {
 
@@ -165,8 +190,12 @@ function chooseCharater(charId) {
 
         if (response.ok && response.status == 200) {
             var newCharName = getCharName(charId);
-            addToLog('You have chosen the character name ' + newCharName);
-            modifyPlayerOnList(currentPlayerId, newCharName, getCharColor(charId));
+            var newCharColor = getCharColor(charId);
+            addToLog('You have chosen the character name "' + newCharName + '"');
+            modifyPlayerOnList(currentPlayerId, newCharName, newCharColor);
+            updatePlayerInObjList(currentPlayerId, newCharName, newCharColor);
+            addToken(newCharColor, [2,2]);
+
             return true;
         }
 
@@ -421,6 +450,7 @@ window.onload = function () {
                     anotherPlayer.setTokenColor(getCharColor(element.selectedCharacterId));
                     player_obj_list.push(anotherPlayer);
                     addPlayerToList(element.id, anotherPlayer.getName(), anotherPlayer.getToken().getColor());
+                    addTokenByPlayerObj(anotherPlayer);
                 }
             }
         })

@@ -7,6 +7,9 @@ class Player {
         this.isCurrentPlayer = isCurrentPlayer;
     }
 
+    getId() {
+        return this.player_id;
+    }
 
     getName() {
         return this.name;
