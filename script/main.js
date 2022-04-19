@@ -64,6 +64,9 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
                 // setCookie('code', response_json.code);
 
                 console.log(response_json);
+
+                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json));
+
                 sessionStorage.setItem('gameCode', response_json.code);
                 sessionStorage.setItem('gameId', response_json.id);
                 sessionStorage.setItem('playerType', 'host');
@@ -135,6 +138,7 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
                 // setCookie('id', response_json.id);
                 // setCookie('code', response_json.code);
 
+                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json));
                 sessionStorage.setItem('gameCode', response_json.code);
                 sessionStorage.setItem('gameId', response_json.id);
 
