@@ -18,7 +18,7 @@ class Player {
     }
 
     moveToken(newCoordinates) {
-
+        this.token.setCoordinates(newCoordinates);
     }
 
     getId() {
