@@ -243,15 +243,19 @@ function addPlayerToListBox(player_id, player_name = '', color = '') {
         let newplayer = document.createElement("div");
         newplayer.setAttribute("id", "player_entry-" + player_id);
 
-        if (color && player_name) {
-            newplayer.innerHTML = '<div class="dot ' + color + '"></div>' + player_name;
+        let display_name = player_name || ("Player " + player_id);
+
+        if (player_id == currentPlayerId) {
+            display_name += ' (You)';
         }
-        else if (player_name) {
-            newplayer.innerHTML = player_name;
+
+        if (color && player_name) {
+            newplayer.innerHTML = '<div class="dot ' + color + '"></div>' + display_name;
         }
         else {
-            newplayer.innerHTML = "Player " + player_id;
+            newplayer.innerHTML = display_name;
         }
+
         // newplayer.style.color = color;
         playerlistdiv.appendChild(newplayer);
 
@@ -267,8 +271,15 @@ function modifyPlayerOnListBox(player_id, new_name, color) {
 
     let playerOnListDiv = document.getElementById('player_entry-' + player_id);
 
+    let display_name = new_name;
+
     if (playerOnListDiv) {
-        playerOnListDiv.innerHTML = '<div class="dot ' + color + '"></div>' + new_name;
+
+        if (player_id == currentPlayerId) {
+            display_name += ' (You)';
+        }
+
+        playerOnListDiv.innerHTML = '<div class="dot ' + color + '"></div>' + display_name;
         console.log("modifyPlayerOnListBox: Changed name and color for player " + player_id);
         return true;
     }

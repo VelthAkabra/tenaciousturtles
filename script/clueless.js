@@ -44,24 +44,42 @@ $(document).on('show.bs.modal', '#selectCharModal', function () {
 
     $("#selectCharSubmitBtn").click(function () {
 
+        let choiceValue = selectCharOptionsElement.value;
 
-            let choiceValue = selectCharOptionsElement.value;
-            if (choiceValue) {
+        let selectCharModalError_Btn_Html = '<button id="selectCharModalErrorBtn" type="button" class="close"' +
+        'aria-label="Close"><span aria-hidden="true">&times;</span></button>';
 
-                chooseCharater(choiceValue).then((res) =>{
-                    console.log(res);
-                    characterSelected = res;
+        if (choiceValue) {
 
-                    if (!characterSelected) {
-                        $("#selectCharModalError").html("Character Selection Failed.<br>Please select again.");
-                        $("#selectCharModalError").fadeIn(300);
-                    }
-                    else {
-                        $("#selectCharModal").modal('hide');
-                    }
-                });
-                
-            }
+            chooseCharater(choiceValue).then((res) => {
+                console.log(res);
+                characterSelected = res;
+
+                if (!characterSelected) {
+                    $("#selectCharModalError").html(selectCharModalError_Btn_Html + 
+                        "Character Selection Failed.<br>Please select again.");
+                    $("#selectCharModalError").fadeIn(300);
+
+                    $('#selectCharModalErrorBtn').click(function () {
+                        $("#selectCharModalError").hide();
+                    });
+                }
+                else {
+                    $("#selectCharModal").modal('hide');
+                }
+            });
+
+        }
+
+        else {
+            $("#selectCharModalError").html(selectCharModalError_Btn_Html +
+                "No Selection Made.<br>Please select one below.");
+            $("#selectCharModalError").fadeIn(300);
+
+            $('#selectCharModalErrorBtn').click(function () {
+                $("#selectCharModalError").hide();
+            });
+        }
     });
 
 });

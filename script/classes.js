@@ -42,10 +42,10 @@ class Player {
         this.token.setCoordinates(coordinates);
     }
 
-    setTokenColor(color) {
-        this.token.setColor(color);
-        modifyPlayerOnListBox(this.player_id, this.name, color);
-    }
+    // setTokenColor(color) {
+    //     this.token.setColor(color);
+    //     modifyPlayerOnListBox(this.player_id, this.name, color);
+    // }
 
     getToken() {
         return this.token;
