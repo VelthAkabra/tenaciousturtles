@@ -7,29 +7,41 @@ connection.onclose(async () => {
 });
 
 connection.on("PlayerJoinedGame", function (message) {
-    console.log(message);
+    // console.log(message);
     // let newPlayerJson = JSON.parse(message);
 
-    let gameId = message.gameSessionId;
+    // let gameId = message.gameSessionId;
     let playerId = message.playerId;
-    let userDisplayName = message.userDisplayName;
+    // let userDisplayName = message.userDisplayName;
 
     if (playerId != currentPlayerId) {
         addPlayerToListBox(playerId, 'Player ' + playerId, '');
         addToLog('Player ' + playerId + ' has joined the game session.');
-        numberOfOtherJoinedPlayers++;
+
+        if (isHost) {
+            numberOfOtherJoinedPlayers++;
+
+            if ((!$("#start_btn").hasClass("disabled")) &&
+                (numberOfOtherReadyPlayers != numberOfOtherJoinedPlayers)) {
+                $("#start_btn").addClass("disabled");
+            }
+        }
     }
 
 });
 
 connection.on("PlayerSelectedCharacter", function (message) {
-    console.log(message);
+    // console.log(message);
 
-    let gameId = message.gameSessionId;
+    // let gameId = message.gameSessionId;
     let playerId = message.playerId;
     let characterId = message.characterId;
 
     if (playerId != currentPlayerId) {
+
+        if (isHost) {
+            numberOfOtherReadyPlayers++;
+        }
 
         var playerCharName = getCharName(characterId);
         var playerCharColor = getCharColor(characterId);
@@ -48,20 +60,20 @@ connection.on("PlayerSelectedCharacter", function (message) {
         let anotherPlayerObj = new Player(playerId, playerCharName, playerCharColor);
         player_obj_list.push(anotherPlayerObj);
 
-        numberOfOtherReadyPlayers++;
-
-        if (isHost) {
-            if ($("#start_btn").hasClass("disabled") &&
-                (numberOfOtherReadyPlayers == numberOfOtherJoinedPlayers) &&
-                characterSelected && (numberOfOtherReadyPlayers >= 2)) {
-                $("#start_btn").removeClass("disabled");
-            }
-        }
     }
 });
 
-connection.on("PlayerDeselectedCharacter", function (message) {
-    console.log(message);
+connection.on("GameCanStart", function (message) {
+    // console.log(message);
+
+    if (isHost) {
+        if ($("#start_btn").hasClass("disabled") &&
+            (numberOfOtherReadyPlayers == numberOfOtherJoinedPlayers) &&
+            characterSelected && (numberOfOtherReadyPlayers >= 2)) {
+            $("#start_btn").removeClass("disabled");
+        }
+    }
+
 });
 
 async function connectToHub() {

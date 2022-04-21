@@ -120,6 +120,7 @@
     height: 100%;
     display: inline-block;
     outline: 1px solid black;
+    vertical-align: top;
 }
 
 .extracard {
@@ -128,6 +129,7 @@
     height: 100%;
     display: inline-block;
     outline: 1px solid black;
+    vertical-align: top;
 }
 
 .spacecontent {

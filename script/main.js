@@ -58,24 +58,27 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
             }
             return response.json();
         }).then((response_json) => {
-            if (response_json.id && response_json.code) {
-                console.log("Game ID and Code returned after POST");
-                // setCookie('id', response_json.id);
-                // setCookie('code', response_json.code);
+
+            // Updated after game server change
+            if (response_json.gameSession && response_json.gameSession.id && response_json.gameSession.code) {
+                console.log("Create game session: Game session json, including session id and code, received after POST");
 
                 console.log(response_json);
 
-                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json));
+                sessionStorage.setItem('gameSessionResponse', JSON.stringify(response_json));
+                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json.gameSession));
 
-                sessionStorage.setItem('gameCode', response_json.code);
-                sessionStorage.setItem('gameId', response_json.id);
+                sessionStorage.setItem('gameCode', response_json.gameSession.code);
+                sessionStorage.setItem('gameId', response_json.gameSession.id);
+                sessionStorage.setItem('currentPlayerId', response_json.yourPlayer.id);
+
                 sessionStorage.setItem('playerType', 'host');
 
 
                 window.location.href = '/clueless.html';
             }
             else {
-                throw "Game ID or Code NOT returned after POST";
+                throw "Create game session: Game ID or Code NOT received after POST";
             }
         }).catch((error) => {
             console.error('Error: ', error);
@@ -133,21 +136,27 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
             }
             return response.json();
         }).then((response_json) => {
-            if (response_json.id && response_json.code) {
-                console.log("Game ID and Code returned after POST");
-                // setCookie('id', response_json.id);
-                // setCookie('code', response_json.code);
 
-                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json));
-                sessionStorage.setItem('gameCode', response_json.code);
-                sessionStorage.setItem('gameId', response_json.id);
+            // Updated after game server change
+            if (response_json.gameSession && response_json.gameSession.id && response_json.gameSession.code) {
+                console.log("Join game session: Game session json, including session id and code, received after POST");
+
+                console.log(response_json);
+
+                sessionStorage.setItem('gameSessionResponse', JSON.stringify(response_json));
+                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json.gameSession));
+
+                sessionStorage.setItem('gameCode', response_json.gameSession.code);
+                sessionStorage.setItem('gameId', response_json.gameSession.id);
+                sessionStorage.setItem('currentPlayerId', response_json.yourPlayer.id);
 
                 sessionStorage.setItem('playerType', 'joined');
+
 
                 window.location.href = '/clueless.html';
             }
             else {
-                throw "Game ID or Code NOT returned after POST";
+                throw "Join game session: Game ID or Code NOT received after POST";
             }
         }).catch((error) => {
             console.error('Error: ', error);
@@ -156,11 +165,6 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
         });
     });
 })
-
-
-// function signedInBtns() {
-
-// }
 
 
 $(document).ready(function () {

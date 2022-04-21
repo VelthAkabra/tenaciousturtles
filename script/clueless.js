@@ -13,7 +13,7 @@ var availCharSet = new Set();
 var gameId = sessionStorage.getItem('gameId');
 var accessToken = getCookie('accessToken');
 var currentPlayerDatabaseId = parseJwt(accessToken).id;
-var currentPlayerId = 0;
+var currentPlayerId = sessionStorage.getItem('currentPlayerId');
 var currentPlayObj = null;
 
 var characterSelected = false;
@@ -47,16 +47,16 @@ $(document).on('show.bs.modal', '#selectCharModal', function () {
         let choiceValue = selectCharOptionsElement.value;
 
         let selectCharModalError_Btn_Html = '<button id="selectCharModalErrorBtn" type="button" class="close"' +
-        'aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+            'aria-label="Close"><span aria-hidden="true">&times;</span></button>';
 
         if (choiceValue) {
 
             chooseCharater(choiceValue).then((res) => {
-                console.log(res);
+                // console.log(res);
                 characterSelected = res;
 
                 if (!characterSelected) {
-                    $("#selectCharModalError").html(selectCharModalError_Btn_Html + 
+                    $("#selectCharModalError").html(selectCharModalError_Btn_Html +
                         "Character Selection Failed.<br>Please select again.");
                     $("#selectCharModalError").fadeIn(300);
 
@@ -145,7 +145,8 @@ window.onload = async function () {
     if (existing_players_list.length > 0) {
         existing_players_list.forEach(element => {
             if (element.userId == currentPlayerDatabaseId) {
-                currentPlayerId = element.id;   // element.id, not userId, is used for identication in the game session
+                // element.id, not userId, is used for identication in the game session
+                console.assert(currentPlayerId == element.id, "currentPlayerId does not match");
             }
             else {
                 if (element.selectedCharacterId) {
@@ -167,20 +168,16 @@ window.onload = async function () {
         })
     }
 
-    console.assert(currentPlayerId, "Error: Current Player ID not available!");
+    // console.assert(currentPlayerId, "Error: Current Player ID not available!");
 
     await connectToHub();
 
-    // var currentPlayer = new Player(currentPlayerId, '', '', true, [2,2]);
-    // player_obj_list.push(currentPlayer);
 
     addPlayerToListBox(currentPlayerId);
 
 
     $("#ModalsToInclude").load("/clueless_modals.html", function () {
         $("#selectCharModal").modal('show');
-
-
 
     });
 
@@ -204,7 +201,5 @@ window.onload = async function () {
     }
 
     // Tests
-
-
 
 }
