@@ -10,6 +10,8 @@ var player_obj_list = [];
 var allCharSet = new Set();
 var availCharSet = new Set();
 
+var cards = new Set();  // depends on 'allCards' returned in 'gameSession' JSON from server
+
 var gameId = sessionStorage.getItem('gameId');
 var accessToken = getCookie('accessToken');
 var currentPlayerDatabaseId = parseJwt(accessToken).id;
@@ -19,7 +21,6 @@ var currentPlayObj = null;
 var characterSelected = false;
 var numberOfOtherReadyPlayers = 0; // for host use only
 var numberOfOtherJoinedPlayers = 0; // for host use only
-
 
 var isHost = sessionStorage.getItem('playerType') === 'host';
 

@@ -14,7 +14,49 @@ class Player {
         this.token = new Token(tokenCoor, color);
         this.isCurrentPlayer = isCurrentPlayer;
 
+        // Set of player's cards. A set of Card objects.
+        // Should set to empty for players other than current player
+        this.cardSet = new Set();
+
         addPlayerToListBox(player_id, name, color);
+    }
+
+    // setCards(cardSet) {
+    //     this.cardSet = cardSet;
+    // }
+
+    addCard(card) {
+        card.setPlayerId(this.player_id);
+        this.cardSet.add(card);
+        if (this.player_id == currentPlayerId) {
+            addYourCardToBox(card.getName());
+        }
+    }
+
+    getCardSet() {
+        return this.cardSet;
+    }
+
+    getCardByName(cardName) {
+        if (this.cardSet.size > 0) {
+            this.cardSet.forEach(card => {
+                if (card.getName() == cardName) {
+                    return card;
+                }
+            })
+        }
+        return null;
+    }
+
+    getCardById(cardId) {
+        if (this.cardSet.size > 0) {
+            this.cardSet.forEach(card => {
+                if (card.getCardId() == cardId) {
+                    return card;
+                }
+            })
+        }
+        return null;
     }
 
     moveToken(newCoordinates) {
@@ -88,7 +130,7 @@ class Token {
 
         console.assert(isHallway(coordinates) || isRoom(coordinates), "setCoordinates: " +
             JSON.stringify(coordinates) + " is not valid coordinates!");
-        
+
         this.#coordinates = coordinates;
 
         this.#moveTokenOnBoard(this.#color, coordinates);
@@ -127,7 +169,7 @@ class Token {
                 return true;
             }
         }
-            return false;
+        return false;
     }
 
 
@@ -191,6 +233,77 @@ class Token {
     #changeTokenColorOnBoard(newColor) {
 
     }
+}
+
+
+/**
+ * Abstract class Card
+ */
+class Card {
+
+    #cardId;
+    #name;
+    #playerId;  // Optional
+    #isExtra;   // Optional
+
+    // If playerId is specified, remember to add this card to player.cardSet immediately
+    constructor(cardId, name, playerId = null, isExtra = false) {
+
+        if (this.constructor == Card) {
+            throw new Error("Card Constructor Error: Abstract class 'Card' can't be instantiated.");
+        }
+
+        if (isExtra && playerId) {
+            throw new Error("Card Constructor Error: 'isExtra' and 'playerId' cannot be both true");
+        }
+
+        this.#cardId = cardId;
+        this.#name = name;
+        this.#playerId = playerId;
+        this.#isExtra = isExtra;
+    }
+
+    getCardId() {
+        return this.#cardId;
+    }
+
+    setExtra(isExtra) {
+
+        if (isExtra && this.#playerId) {
+            this.#playerId = null;
+        }
+        this.#isExtra = isExtra;
+    }
+
+    getName() {
+        return this.#name;
+    }
+
+    getPlayerId() {
+        return this.#playerId;
+    }
+
+    // Whenever invoked, remember to add this card to player.cardSet immediately
+    setPlayerId(playerId) {
+        if (playerId && this.#isExtra) {
+            this.#isExtra = false;
+        }
+        this.#playerId = playerId;
+    }
+
+
+}
+
+class RoomCard extends Card {
+
+}
+
+class WeaponCard extends Card {
+
+}
+
+class CharacterCard extends Card {
+
 }
 
 // Ideally, the following functions should only be invoked by Player and Token member methods

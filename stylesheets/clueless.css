@@ -97,6 +97,8 @@
     margin-bottom: 5%;
 
     width: 90%;
+
+    word-wrap: break-word;
 }
 
 #extracards_box{
@@ -104,6 +106,8 @@
     /* margin-bottom: 5%; */
 
     width: 100%;
+
+    word-wrap: break-word;
 }
 
 .yourcarddisplay {

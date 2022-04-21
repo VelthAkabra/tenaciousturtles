@@ -298,3 +298,32 @@ function addToLog(text) {
     textlog.scrollTop = textlog.scrollHeight;
 
 }
+
+function getPlayerById(player_id) {
+    let playerToReturn = null;
+    if (player_obj_list.length > 0) {
+        player_obj_list.forEach(player => {
+            if (player.getId() == player_id) {
+                playerToReturn = player;
+            }
+        });
+    }
+
+    return playerToReturn;
+}
+
+
+function getPlayerByCharName(char_name) {
+
+    let playerToReturn = null;
+
+    if (player_obj_list.length > 0) {
+        player_obj_list.forEach(player => {
+            if (player.getName() == char_name) {
+                playerToReturn = player;
+            }
+        });
+    }
+
+    return playerToReturn;
+}
