@@ -27,10 +27,26 @@ class Player {
 
     addCard(card) {
         card.setPlayerId(this.player_id);
-        this.cardSet.add(card);
-        if (this.player_id == currentPlayerId) {
-            addYourCardToBox(card.getName());
+        if (!this.hasCard(card)) {
+            this.cardSet.add(card);
+            if (this.player_id == currentPlayerId) {
+                addYourCardToBox(card.getName());
+            }
         }
+    }
+
+    hasCard(card) {
+        let result = false;
+
+        if (this.cardSet.size > 0) {
+            this.cardSet.forEach(element => {
+                if (element.deepEquals(card)) {
+                    result = true;
+                }
+            });
+        }
+
+        return result;
     }
 
     getCardSet() {
@@ -263,6 +279,14 @@ class Card {
         this.#isExtra = isExtra;
     }
 
+    deepEquals(card) {
+        return (this.#cardId == card.getCardId() &&
+            this.#name == card.getName() &&
+            this.#isExtra == card.getIsExtra() &&
+            this.#playerId == card.getPlayerId() &&
+            this.constructor === card.constructor);
+    }
+
     getCardId() {
         return this.#cardId;
     }
@@ -281,6 +305,10 @@ class Card {
 
     getPlayerId() {
         return this.#playerId;
+    }
+
+    getIsExtra() {
+        return this.#isExtra;
     }
 
     // Whenever invoked, remember to add this card to player.cardSet immediately
