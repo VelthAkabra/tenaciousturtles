@@ -41,7 +41,7 @@ $(document).ready(function () {
 connection.on("GameHasStarted", function (message) {
     // console.log(message);
 
-    sessionStorage.setItem('gameSessionJson', JSON.stringify(message));
+    sessionStorage.setItem('gameSessionJsonAfterStart', JSON.stringify(message));
 
     addToLog("This game session has started!");
 
@@ -49,7 +49,12 @@ connection.on("GameHasStarted", function (message) {
         $('#start_btn').addClass('d-none');
     }
 
+    allRoomSet = getRoomSet();
+    allWeaponSet = getWeaponSet();
+    
     let publicCards = message.gameSession.publicCards;
+
+    gameStarted = true;
 
     // Temporary extract cards for each player
     // depends on 'allCards' returned in 'gameSession' JSON from server
@@ -75,13 +80,13 @@ connection.on("GameHasStarted", function (message) {
         }
 
         if (cardJson.character) {
-            cardObj = new CharacterCard(cardId, cardName, cardPlayerId, isExtraCard);
+            cardObj = new CharacterCard(cardId, cardName, cardPlayerId, isExtraCard, cardJson.characterId);
         }
         else if (cardJson.room) {
-            cardObj = new RoomCard(cardId, cardName, cardPlayerId, isExtraCard);
+            cardObj = new RoomCard(cardId, cardName, cardPlayerId, isExtraCard, cardJson.roomId);
         }
         else if (cardJson.weapon) {
-            cardObj = new WeaponCard(cardId, cardName, cardPlayerId, isExtraCard);
+            cardObj = new WeaponCard(cardId, cardName, cardPlayerId, isExtraCard, cardJson.weaponId);
         }
         else {
             throw new Error("gameSession.allCards Error: The card" + cardId + ": " +
@@ -102,6 +107,7 @@ connection.on("GameHasStarted", function (message) {
         }
 
         cards.add(cardObj);
+
     });
     
     // Temporary showing extra cards, need changes

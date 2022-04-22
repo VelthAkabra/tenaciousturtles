@@ -50,13 +50,44 @@ function getGameSessionJson() {
     return gameSessionJson;
 }
 
+function getGameSessionJsonAfterStart() {
+    let gameSessionJsonAfterStart = JSON.parse(sessionStorage.getItem("gameSessionJsonAfterStart"));
+    return gameSessionJsonAfterStart;
+}
+
 function getCharacterSet() {
-    let gameSessionJson = getGameSessionJson();
+    let gameSessionJson = getGameSessionJson(); // Before host starts game
 
     let characterList = gameSessionJson.characters;
 
     if (characterList.length === 6) {
         return new Set(characterList);
+    }
+    else {
+        return null;
+    }
+}
+
+function getWeaponSet() {
+    let gameSessionJsonAfterStart = getGameSessionJsonAfterStart().gameSession; // After host starts game, gameSession json format changes
+
+    let weaponList = gameSessionJsonAfterStart.weapons;
+
+    if (weaponList.length === 6) {
+        return new Set(weaponList);
+    }
+    else {
+        return null;
+    }
+}
+
+function getRoomSet() {
+    let gameSessionJsonAfterStart = getGameSessionJsonAfterStart().gameSession; // After host starts game, gameSession json format changes
+
+    let roomList = gameSessionJsonAfterStart.rooms;
+
+    if (roomList.length === 9) {
+        return new Set(roomList);
     }
     else {
         return null;

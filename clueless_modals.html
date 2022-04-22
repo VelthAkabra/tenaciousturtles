@@ -8,7 +8,8 @@
                 <h5 class="modal-title">Please Select a Character</h5>
             </div>
             <div class="alert alert-warning alert-dismissible" role="alert" id="selectCharModalError">
-                <button id="selectCharModalErrorBtn" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button id="selectCharModalErrorBtn" type="button" class="close" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body text-center">
                 <select class="form-select" id="selectCharOptions">
@@ -20,6 +21,44 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="selectCharSubmitBtn">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Make Accusation Modal -->
+
+<div class="modal fade hide" id="accuseModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title">Make an Accusation</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="accuse-weapon-select">Select a Weapon</label>
+                    <select class="form-control" id="accuse-weapon-select">
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="accuse-character-select">Select a Suspect</label>
+                    <select class="form-control" id="accuse-character-select">
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="accuse-room-select">Select a Room</label>
+                    <select class="form-control" id="accuse-room-select">
+
+                    </select>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="accuseSubmitBtn">Submit</button>
             </div>
         </div>
     </div>

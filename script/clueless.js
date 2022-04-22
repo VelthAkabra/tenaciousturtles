@@ -7,8 +7,11 @@ const ClassicCharacterNames = ['Miss Scarlett', 'Colonel Mustard',
 const tokenColors = ['red', 'yellow', 'white', 'green', 'blue', 'plum'];
 
 var player_obj_list = [];
-var allCharSet = new Set();
-var availCharSet = new Set();
+var allCharSet = null;
+var availCharSet = null;
+
+var allRoomSet = null;
+var allWeaponSet = null;
 
 var cards = new Set();  // depends on 'allCards' returned in 'gameSession' JSON from server
 
@@ -23,6 +26,7 @@ var numberOfOtherReadyPlayers = 0; // for host use only
 var numberOfOtherJoinedPlayers = 0; // for host use only
 
 var isHost = sessionStorage.getItem('playerType') === 'host';
+var gameStarted = false;
 
 
 $(document).on('show.bs.modal', '#selectCharModal', function () {
@@ -202,5 +206,5 @@ window.onload = async function () {
     }
 
     // Tests
-
+    $('#accuseBtn').removeClass('disabled');
 }

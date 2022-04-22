@@ -324,14 +324,26 @@ class Card {
 
 class RoomCard extends Card {
 
+    constructor(cardId, name, playerId = null, isExtra = false, roomId = null) {
+        super(cardId, name, playerId, isExtra);
+        this.roomId = roomId;
+    }
 }
 
 class WeaponCard extends Card {
 
+    constructor(cardId, name, playerId = null, isExtra = false, weaponId = null) {
+        super(cardId, name, playerId, isExtra);
+        this.weaponId = weaponId;
+    }
 }
 
 class CharacterCard extends Card {
 
+    constructor(cardId, name, playerId = null, isExtra = false, characterId = null) {
+        super(cardId, name, playerId, isExtra);
+        this.characterId = characterId;
+    }
 }
 
 // Ideally, the following functions should only be invoked by Player and Token member methods
