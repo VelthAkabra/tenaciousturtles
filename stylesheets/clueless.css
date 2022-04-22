@@ -59,6 +59,10 @@
     white-space: normal;
 }
 
+.spacecontent {
+    overflow-wrap: break-word;
+}
+
 .verthalltile {
     width: 50%;
     /* padding-top: 100%; */

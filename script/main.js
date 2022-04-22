@@ -60,16 +60,16 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
         }).then((response_json) => {
 
             // Updated after game server change
-            if (response_json.gameSession && response_json.gameSession.id && response_json.gameSession.code) {
+            if (response_json && response_json.id && response_json.code) {
                 console.log("Create game session: Game session json, including session id and code, received after POST");
 
                 console.log(response_json);
 
-                sessionStorage.setItem('gameSessionResponse', JSON.stringify(response_json));
-                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json.gameSession));
+                // sessionStorage.setItem('gameSessionResponse', JSON.stringify(response_json));
+                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json));
 
-                sessionStorage.setItem('gameCode', response_json.gameSession.code);
-                sessionStorage.setItem('gameId', response_json.gameSession.id);
+                sessionStorage.setItem('gameCode', response_json.code);
+                sessionStorage.setItem('gameId', response_json.id);
                 sessionStorage.setItem('currentPlayerId', response_json.yourPlayer.id);
 
                 sessionStorage.setItem('playerType', 'host');
@@ -138,16 +138,16 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
         }).then((response_json) => {
 
             // Updated after game server change
-            if (response_json.gameSession && response_json.gameSession.id && response_json.gameSession.code) {
+            if (response_json && response_json.id && response_json.code) {
                 console.log("Join game session: Game session json, including session id and code, received after POST");
 
                 console.log(response_json);
 
-                sessionStorage.setItem('gameSessionResponse', JSON.stringify(response_json));
-                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json.gameSession));
+                // sessionStorage.setItem('gameSessionResponse', JSON.stringify(response_json));
+                sessionStorage.setItem('gameSessionJson', JSON.stringify(response_json));
 
-                sessionStorage.setItem('gameCode', response_json.gameSession.code);
-                sessionStorage.setItem('gameId', response_json.gameSession.id);
+                sessionStorage.setItem('gameCode', response_json.code);
+                sessionStorage.setItem('gameId', response_json.id);
                 sessionStorage.setItem('currentPlayerId', response_json.yourPlayer.id);
 
                 sessionStorage.setItem('playerType', 'joined');

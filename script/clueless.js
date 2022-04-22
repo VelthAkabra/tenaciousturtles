@@ -7,10 +7,20 @@ const ClassicCharacterNames = ['Miss Scarlett', 'Colonel Mustard',
 const tokenColors = ['red', 'yellow', 'white', 'green', 'blue', 'plum'];
 
 var player_obj_list = [];
+
+// Character entry format:
+// {id: 43, character: {id: 1, name: "Mr. Green", color: "green"}, isAvailable: true}
 var allCharSet = null;
 var availCharSet = null;
 
+// boardRoom entry format:
+// {id: 65, x: 0, y: 2, room: {id: 2, name: "Library"}, players: [], isHallway: false}
+var allBoardRoomSet = null;
+
+// room entry format:
+// {id: 2, name: "Library"}
 var allRoomSet = null;
+
 var allWeaponSet = null;
 
 var cards = new Set();  // depends on 'allCards' returned in 'gameSession' JSON from server
@@ -43,7 +53,7 @@ $(document).on('show.bs.modal', '#selectCharModal', function () {
         let newOption = document.createElement("option");
         newOption.setAttribute("id", "selectCharOption-" + character.id);
         newOption.value = character.id;
-        newOption.text = character.name;
+        newOption.text = character.character.name;
         selectCharOptionsElement.add(newOption);
     });
 
@@ -206,9 +216,6 @@ window.onload = async function () {
     // }
 
     // Tests
-    $('#accuseBtn').removeClass('disabled');
+    
 
-    let coordSet = new Set([[1,2] , [1,4], [2,4], [2,2], [2,3]]);
-
-    highlighSpaces(coordSet);
 }

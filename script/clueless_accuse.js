@@ -18,9 +18,10 @@ $(document).on('show.bs.modal', '#accuseModal', function () {
 
     allCharSet.forEach(character => {
         let newOption = document.createElement("option");
-        newOption.setAttribute("id", "accuse-select-character-entry-" + character.id);
-        newOption.value = character.id;
-        newOption.text = character.name;
+        // Must use character.character.id, character.character.name, etc, for accusation
+        newOption.setAttribute("id", "accuse-select-character-entry-" + character.character.id);
+        newOption.value = character.character.id;
+        newOption.text = character.character.name;
         selectSuspectElement.add(newOption);
     });
 
@@ -42,12 +43,55 @@ $(document).on('show.bs.modal', '#accuseModal', function () {
 
     $("#accuseSubmitBtn").click(function () {
 
+        console.assert(gameStarted, "accuseSubmitBtn clicked by mistake: Game has not been started by host.");
+
         let charChoiceValue = selectSuspectElement.value;
         let weaponChoiceValue = selectWeaponElement.value;
         let roomChoiceValue = selectRoomElement.value;
 
-        alert("You accused: Weapon id: " + weaponChoiceValue + " Character id: " + charChoiceValue +
-            " Room id: " + roomChoiceValue);
+        let assucationJson = JSON.stringify({
+            "roomId": roomChoiceValue, "characterId": charChoiceValue,
+            "weaponId": weaponChoiceValue
+        });
+
+        console.log(assucationJson);
+
+        // alert("You accused: Weapon id: " + weaponChoiceValue + " Character id: " + charChoiceValue +
+        //     " Room id: " + roomChoiceValue);
+
+        fetchAccuse(assucationJson).then(responseJson => {
+            console.log(responseJson);
+            alert("Accusation Made!");
+        }).catch(e => {
+            console.error('fetchAccuse Error:' + e.name + ': ' + e.message);
+            addToLog("Failed to make the accusation!");
+        });
+
+
     });
 
 });
+
+async function fetchAccuse(assucationJson) {
+    let accuseUrl = 'https://clue-app-service-windows.azurewebsites.net/api/GameSessions/' +
+        gameId + '/accusation';
+
+    let response = await fetch(accuseUrl, {
+        method: 'PUT',
+        redirect: 'error',
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Bearer ' + accessToken
+        },
+        body: assucationJson
+    });
+
+    if (!response.ok) {
+        const message = `fetchAccuse Error: ${response.status} - ${response.statusText}`;
+        throw new Error(message);
+    }
+
+    let responseJson = await response.json();
+    return responseJson;
+
+}

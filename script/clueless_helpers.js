@@ -29,6 +29,7 @@ function updatePlayerInObjList(playerId, newCharName, newCharColor) {
     return false;
 }
 
+// Use only for player to choose character "before host starts game"
 function deleteAvailChar(characterId) {
 
     if (availCharSet.size > 0) {
@@ -68,32 +69,6 @@ function getCharacterSet() {
     }
 }
 
-function getWeaponSet() {
-    let gameSessionJsonAfterStart = getGameSessionJsonAfterStart().gameSession; // After host starts game, gameSession json format changes
-
-    let weaponList = gameSessionJsonAfterStart.weapons;
-
-    if (weaponList.length === 6) {
-        return new Set(weaponList);
-    }
-    else {
-        return null;
-    }
-}
-
-function getRoomSet() {
-    let gameSessionJsonAfterStart = getGameSessionJsonAfterStart().gameSession; // After host starts game, gameSession json format changes
-
-    let roomList = gameSessionJsonAfterStart.rooms;
-
-    if (roomList.length === 9) {
-        return new Set(roomList);
-    }
-    else {
-        return null;
-    }
-}
-
 function getAvailableCharacterSet() {
     let gameSessionJson = getGameSessionJson();
 
@@ -114,21 +89,25 @@ function getAvailableCharacterSet() {
     }
 }
 
-function getCharName(charId) {
+// Use only for player to choose character "before host starts game"
+function getCharName(charSelectId) {
     playerCharName = '';
     allCharSet.forEach(element => {
-        if (element.id == charId) {
-            playerCharName = element.name;
+        // Here use element.id instead of element.character.id for player's character selection
+        if (element.id == charSelectId) {
+            playerCharName = element.character.name;
         }
     })
     return playerCharName;
 }
 
-function getCharColor(charId) {
+// Use only for player to choose character "before host starts game"
+function getCharColor(charSelectId) {
     playerCharColor = '';
     allCharSet.forEach(element => {
-        if (element.id == charId) {
-            playerCharColor = element.color;
+        // Here use element.id instead of element.character.id for player's character selection
+        if (element.id == charSelectId) {
+            playerCharColor = element.character.color;
         }
     })
     return playerCharColor;
@@ -359,76 +338,22 @@ function getPlayerByCharName(char_name) {
     return playerToReturn;
 }
 
+function getRoomNameByCoord(coordinates) {
 
-/**
- * 
- * @param {*} spaceSet Set of coordinates in the form of [x,y]
- */
-function highlighSpaces(spaceSet) {
-    spaceSet.forEach(coordinates => {
+    let roomName = null;
 
-        console.assert(isRoom(coordinates) || isHallway(coordinates),
-            "highlighSpaces Error: " + coordinates + " is invalid");
-
-        let tileId = "tile-" + coordinates[0] + coordinates[1];
-        $("#" + tileId).animate({
-            outlineColor: "lime",
-            outlineWidth: "3px"
-        });
-
-        // let border_original_color = $("#" + tileId).css("border-color");
-        // let border_original_width = $("#" + tileId).css("border-width");
-        // let border_original_style = $("#" + tileId).css("border-style");
-
-
-        $("#" + tileId).hover(function() {
-            // alert(coordinates);
-            $(this).animate({
-                outlineColor: "blue"
-            }, 100)
-        }, function() {
-            $(this).animate({
-                outlineColor: "lime"
-            }, 100)
-        });
-
-        let spacecontentId = "spacecontent-" + coordinates[0] + coordinates[1];
-
-        $("#" + tileId).click(function() { 
-            clickSpace(coordinates); 
-        });
-
-        // $("#" + spacecontentId).click(function() { 
-        //     clickSpace(coordinates); 
-        // });
-
-
+    if (isHallway(coordinates)) {
+        return "Hallway";
+    }
+    
+    allBoardRoomSet.forEach(boardRoom => {
+        if (boardRoom.x == coordinates[0] && boardRoom.y == coordinates[1]) {
+            roomName = boardRoom.room.name;
+        }
     });
-}
 
-function stopHighlighSpaces(spaceSet) {
-
-    spaceSet.forEach(coordinates => {
-
-        console.assert(isRoom(coordinates) || isHallway(coordinates),
-            "stopHighlighSpaces Error: " + coordinates + " is invalid");
-
-        let tileId = "tile-" + coordinates[0] + coordinates[1];
-        $("#" + tileId).css("outline-color", "black");
-        $("#" + tileId).css("outline-width", "1px");
-
-        $("#" + tileId).off( "mouseenter mouseleave" );
-
-        let spacecontentId = "spacecontent-" + coordinates[0] + coordinates[1];
-
-        $("#" + tileId).off('click');
-
-        // $("#" + spacecontentId).off('click');
-
-    });
-}
-
-function clickSpace(coordinates) {
-
-    alert(coordinates);
+    if (roomName == null) {
+        console.error('getRoomNameByCoord Error: ' + coordinates + ' does not have a room name.');
+    }
+    return roomName;
 }

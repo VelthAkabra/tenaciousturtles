@@ -49,9 +49,10 @@ connection.on("GameHasStarted", function (message) {
         $('#start_btn').addClass('d-none');
     }
 
-    allRoomSet = getRoomSet();
-    allWeaponSet = getWeaponSet();
-    
+    getRoomSet();
+    getWeaponSet();
+    displayRoomNames();
+
     let publicCards = message.gameSession.publicCards;
 
     gameStarted = true;
@@ -101,15 +102,27 @@ connection.on("GameHasStarted", function (message) {
             }
             else {
                 throw new Error("getPlayerById Error: The player " + cardPlayerId + " from card: " +
-                cardName + " does not exist");
+                    cardName + " does not exist");
             }
-            
+
         }
 
         cards.add(cardObj);
 
+        // Temporarily highlight ajacent hallways adjacent to center
+        // TODO: move to after it's the player's ture
+        // TODO: compute or receive the available areas
+
+        let coordSet = new Set([[1, 2], [2, 1], [3, 2], [2, 3]]);
+
+        highlighSpaces(coordSet);
+
+        // Temporarily enable accuse button
+        // TODO: move to after it's the player's turn
+        $('#accuseBtn').removeClass('disabled');
+
     });
-    
+
     // Temporary showing extra cards, need changes
     // TODO: Implement Card class first
 
@@ -131,3 +144,65 @@ connection.on("GameHasStarted", function (message) {
     //     });
     // }
 });
+
+
+function getWeaponSet() {
+    let gameSessionJsonAfterStart = getGameSessionJsonAfterStart().gameSession; // After host starts game, gameSession json format changes
+
+    let weaponList = gameSessionJsonAfterStart.weapons;
+
+    if (weaponList.length === 6) {
+        allWeaponSet = new Set(weaponList);
+    }
+    else {
+        console.error("getWeaponSet Error: Number of weapons is not 6.");
+    }
+}
+
+function getRoomSet() {
+    let gameSessionJsonAfterStart = getGameSessionJsonAfterStart().gameSession; // After host starts game, gameSession json format changes
+
+    let boardRoomList = gameSessionJsonAfterStart.board;
+    // Format: {id: 64, x: 0, y: 0, room: {id: 1, name: "Study Room"}, players: [], isHallway: false}
+
+    if (boardRoomList.length >= 9) {
+
+        allBoardRoomSet = new Set();
+        allRoomSet = new Set();
+
+        boardRoomList.forEach(boardRoom => {
+            if (boardRoom.room) {
+                allBoardRoomSet.add(boardRoom);
+                allRoomSet.add(boardRoom.room);
+            }
+
+            // else {
+            //     console.log("getRoomSet: boardRoom format error. ID: " + boardRoom.id);
+            // }
+        });
+
+        console.log("getRoomSet: Room list saved.");
+    }
+    else {
+        console.error("getRoomSet: Number of rooms < 9");
+    }
+}
+
+function displayRoomNames() {
+    if (allBoardRoomSet.size == 9) {
+
+        allBoardRoomSet.forEach(boardRoom => {
+            let spacecontent_texts_id = "spacecontent_texts-" + boardRoom.x + boardRoom.y;
+
+            let roomName = boardRoom.room.name;
+            if (roomName.length > 6) {
+                roomName = roomName.slice(0, 6) + "- " + roomName.slice(6);
+            }
+
+            $("#" + spacecontent_texts_id).html();
+        });
+    }
+    else {
+        console.error('displayRoomNames Error: board size is not 9');
+    }
+}

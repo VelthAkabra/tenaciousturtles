@@ -59,6 +59,41 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="accuseSubmitBtn">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Accusation Result Modal -->
+
+<div class="modal fade hide" id="accuseResultModal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title" id="accuseResultModal_title"></h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label><strong>The accusation was:</strong></label>
+                    <P id="accuseResultModal_room_name"></P>
+                    <P id="accuseResultModal_weapon_name"></P>
+                    <P id="accuseResultModal_character_name"></P>
+                </div>
+
+                <div class="form-group">
+                    <label id="accuseResultModal_result"></label>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label id="accuseResultModal_next_step"></label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="accuseResultBtn"></button>
             </div>
         </div>
     </div>
