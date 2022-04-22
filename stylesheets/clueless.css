@@ -36,6 +36,21 @@
     white-space: nowrap;
 }
 
+.spacecontent_texts {
+    /* margin-top: 0px;
+    /* text-align: center; */
+    margin-bottom: 15%;
+    /* padding-left: 2%; */
+}
+
+.spacecontent_dots {
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 0px;
+    padding: 0px;
+    /* text-align: center; */
+}
+
 .roomtile {
     width: 100%;
     /* padding-top: 100%; */
@@ -52,21 +67,6 @@
     background-color: white;
     outline: 1px solid black;
     white-space: normal;
-}
-
-.spacecontent_texts {
-    /* margin-top: 0px;
-    /* text-align: center; */
-    margin-bottom: 15%;
-    /* padding-left: 2%; */
-}
-
-.spacecontent_dots {
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-top: 0px;
-    padding: 0px;
-    /* text-align: center; */
 }
 
 .horihalltile {

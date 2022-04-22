@@ -100,7 +100,7 @@ connection.on("GameHasStarted", function (message) {
                 playerObj.addCard(cardObj);
             }
             else {
-                throw new Error("getPlayerById Error: The player" + cardPlayerId + " from card: " +
+                throw new Error("getPlayerById Error: The player " + cardPlayerId + " from card: " +
                 cardName + " does not exist");
             }
             

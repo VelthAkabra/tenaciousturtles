@@ -8,7 +8,6 @@ connection.onclose(async () => {
 
 connection.on("PlayerJoinedGame", function (message) {
     // console.log(message);
-    // let newPlayerJson = JSON.parse(message);
 
     // let gameId = message.gameSessionId;
     let playerId = message.playerId;

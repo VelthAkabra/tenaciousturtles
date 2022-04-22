@@ -207,23 +207,23 @@ function isHallway(coordinates) {
 
 }
 
-function clickRoom(e) {
-    var badCoords = ['11', '13', '31', '33']
+// function clickRoom(e) {
+//     var badCoords = ['11', '13', '31', '33']
 
-    var tileName = e['path'][0]['id'];
-    var tileCoord = tileName.split('-')[1];
+//     var tileName = e['path'][0]['id'];
+//     var tileCoord = tileName.split('-')[1];
 
-    var isBad = false;
-    if (badCoords.includes(tileCoord)) {
-        isBad = true;
-    }
+//     var isBad = false;
+//     if (badCoords.includes(tileCoord)) {
+//         isBad = true;
+//     }
 
-    if (isBad) {
-        return;
-    }
+//     if (isBad) {
+//         return;
+//     }
 
-    console.log(tileCoord);
-}
+//     console.log(tileCoord);
+// }
 
 function addYourCardToBox(name) {
     var carddisplay = document.getElementById("your_card_display");
@@ -357,4 +357,78 @@ function getPlayerByCharName(char_name) {
     }
 
     return playerToReturn;
+}
+
+
+/**
+ * 
+ * @param {*} spaceSet Set of coordinates in the form of [x,y]
+ */
+function highlighSpaces(spaceSet) {
+    spaceSet.forEach(coordinates => {
+
+        console.assert(isRoom(coordinates) || isHallway(coordinates),
+            "highlighSpaces Error: " + coordinates + " is invalid");
+
+        let tileId = "tile-" + coordinates[0] + coordinates[1];
+        $("#" + tileId).animate({
+            outlineColor: "lime",
+            outlineWidth: "3px"
+        });
+
+        // let border_original_color = $("#" + tileId).css("border-color");
+        // let border_original_width = $("#" + tileId).css("border-width");
+        // let border_original_style = $("#" + tileId).css("border-style");
+
+
+        $("#" + tileId).hover(function() {
+            // alert(coordinates);
+            $(this).animate({
+                outlineColor: "blue"
+            }, 100)
+        }, function() {
+            $(this).animate({
+                outlineColor: "lime"
+            }, 100)
+        });
+
+        let spacecontentId = "spacecontent-" + coordinates[0] + coordinates[1];
+
+        $("#" + tileId).click(function() { 
+            clickSpace(coordinates); 
+        });
+
+        // $("#" + spacecontentId).click(function() { 
+        //     clickSpace(coordinates); 
+        // });
+
+
+    });
+}
+
+function stopHighlighSpaces(spaceSet) {
+
+    spaceSet.forEach(coordinates => {
+
+        console.assert(isRoom(coordinates) || isHallway(coordinates),
+            "stopHighlighSpaces Error: " + coordinates + " is invalid");
+
+        let tileId = "tile-" + coordinates[0] + coordinates[1];
+        $("#" + tileId).css("outline-color", "black");
+        $("#" + tileId).css("outline-width", "1px");
+
+        $("#" + tileId).off( "mouseenter mouseleave" );
+
+        let spacecontentId = "spacecontent-" + coordinates[0] + coordinates[1];
+
+        $("#" + tileId).off('click');
+
+        // $("#" + spacecontentId).off('click');
+
+    });
+}
+
+function clickSpace(coordinates) {
+
+    alert(coordinates);
 }

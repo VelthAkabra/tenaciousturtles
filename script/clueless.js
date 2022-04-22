@@ -192,19 +192,23 @@ window.onload = async function () {
 
     // Clickable Areas - Will be replaced
 
-    var anchors = document.getElementsByTagName('div');
-    for (var i = 0; i < anchors.length; i++) {
-        var anchor = anchors[i];
-        var id = anchor.getAttribute('id');
-        if (id != undefined) {
-            if (id.includes("tile")) {
-                anchor.onclick = function (e) {
-                    clickRoom(e);
-                }
-            }
-        }
-    }
+    // var anchors = document.getElementsByTagName('div');
+    // for (var i = 0; i < anchors.length; i++) {
+    //     var anchor = anchors[i];
+    //     var id = anchor.getAttribute('id');
+    //     if (id != undefined) {
+    //         if (id.includes("tile")) {
+    //             anchor.onclick = function (e) {
+    //                 clickRoom(e);
+    //             }
+    //         }
+    //     }
+    // }
 
     // Tests
     $('#accuseBtn').removeClass('disabled');
+
+    let coordSet = new Set([[1,2] , [1,4], [2,4], [2,2], [2,3]]);
+
+    highlighSpaces(coordSet);
 }
