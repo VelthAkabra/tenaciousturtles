@@ -101,6 +101,10 @@ connection.on("PlayerMadeAnAccusation", function (message) {
 
     $("#accuseModal").modal('hide');
     $("#accuseResultModal").modal('show');
+
+    $('.modal-dialog').draggable({
+        "handle": ".modal-header"
+    });
     
     let madeByPlayerId = message.player.id;
 

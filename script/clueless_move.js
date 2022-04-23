@@ -145,7 +145,7 @@ connection.on("PlayerHasMoved", function (message) {
 
         // Temporary, need to change
         // TODO
-        stopHighlighSpaces(new Set([[1, 2], [2, 1], [3, 2], [2, 3]]));
+        // stopHighlighSpaces(new Set([[1, 2], [2, 1], [3, 2], [2, 3]]));
     }
 
     else {
