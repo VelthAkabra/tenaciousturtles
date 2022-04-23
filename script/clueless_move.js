@@ -166,7 +166,52 @@ function clickSpace(coordinates, spaceSet) {
             });
         }
 
-        // End of remove
+        $("#suggestSubmitBtn").click(function() {
+            $("#suggestModal").modal('hide');
+            let charChoiceValue = document.getElementById('suggest-character-select').value;
+            let weaponChoiceValue = document.getElementById('suggest-weapon-select').value;
+            let roomName = getRoomNameByCoord(currentPlayObj.getToken().getCoordinates());
+
+            let roomValue = null;
+            allRoomSet.forEach(room => {
+                if (room.name == roomName) {
+                    roomValue = room.id;
+                }
+            });
+
+            let notYetDisproved = true;
+
+            cards.forEach(card => {
+                if (card instanceof RoomCard) {
+                    if (card.name == roomName && card.getPlayerId() &&
+                        card.getPlayerId() != currentPlayerId && notYetDisproved) {
+                        notYetDisproved = false;
+                        addToLog(getPlayerById(card.getPlayerId()).getName() + " disproved your suggestion!");
+                        addToLog("He/She has the card " + roomName);
+                    }
+                }
+
+                else if (card instanceof WeaponCard) {
+                    if (card.weaponId == weaponChoiceValue && card.getPlayerId() &&
+                        card.getPlayerId() != currentPlayerId && notYetDisproved) {
+                        notYetDisproved = false;
+                        addToLog(getPlayerById(card.getPlayerId()).getName() + " disproved your suggestion!");
+                        addToLog("He/She has the card " + card.getName());
+                    }
+                }
+
+                else if (card instanceof CharacterCard) {
+                    if (card.characterId == charChoiceValue && card.getPlayerId() &&
+                        card.getPlayerId() != currentPlayerId && notYetDisproved) {
+                        notYetDisproved = false;
+                        addToLog(getPlayerById(card.getPlayerId()).getName() + " disproved your suggestion!");
+                        addToLog("He/She has the card " + card.getName());
+                    }
+                }
+            })
+        })
+
+        // End of to-be-removed part
 
     }).catch(e => {
         console.error('fetchMove Error:' + e.name + ': ' + e.message);
@@ -180,8 +225,9 @@ function clickSpace(coordinates, spaceSet) {
 connection.on("PlayerHasMoved", function (message) {
     console.log(message);
 
-    // Temporary, TODO: delete
+    // Temporary, TODO: remove
     movedSteps++;
+    // End of to-be-removed
 
     sessionStorage.setItem('PlayerHasMovedBroadcast', message);
 
