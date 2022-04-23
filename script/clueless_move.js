@@ -120,6 +120,54 @@ function clickSpace(coordinates, spaceSet) {
 
         success = true;
 
+
+        // Temporary
+        // TODO: Remove
+
+        if (isRoom(currentPlayObj.getToken().getCoordinates()) && (currentPlayObj.getToken().getCoordinates()[0] != 2 ||
+            currentPlayObj.getToken().getCoordinates()[1] != 2)) {
+
+            $("#suggestModal").modal('show');
+
+            let selectWeaponElement = document.getElementById('suggest-weapon-select');
+            let selectSuspectElement = document.getElementById('suggest-character-select');
+
+            allCharSet.forEach(character => {
+
+                // Must use character.character.id, character.character.name, etc, for accusation
+                let newOptionId = "suggest-select-character-entry-" + character.character.id;
+                if ($('#' + newOptionId).length) {
+
+                }
+                else {
+                    let newOption = document.createElement("option");
+                    newOption.setAttribute("id", newOptionId);
+                    newOption.value = character.character.id;
+                    newOption.text = character.character.name;
+                    selectSuspectElement.add(newOption);
+                }
+
+            });
+
+            allWeaponSet.forEach(weapon => {
+
+                let newOptionId = "suggest-select-weapon-entry-" + weapon.id;
+                if ($('#' + newOptionId).length) {
+
+                }
+                else {
+                    let newOption = document.createElement("option");
+                    newOption.setAttribute("id", newOptionId);
+                    newOption.value = weapon.id;
+                    newOption.text = weapon.name;
+                    selectWeaponElement.add(newOption);
+                }
+
+            });
+        }
+
+        // End of remove
+
     }).catch(e => {
         console.error('fetchMove Error:' + e.name + ': ' + e.message);
         addToLog("Move to " + getRoomNameByCoord(coordinates) + " failed!");
@@ -161,46 +209,7 @@ connection.on("PlayerHasMoved", function (message) {
 
     else {
 
-        if (isRoom(currentPlayObj.getToken().getCoordinates()) && (currentPlayObj.getToken().getCoordinates()[0] != 2 ||
-            currentPlayObj.getToken().getCoordinates()[1] != 2)) {
-            $("#suggestModal").modal('show');
-
-            let selectWeaponElement = document.getElementById('suggest-weapon-select');
-            let selectSuspectElement = document.getElementById('suggest-character-select');
-
-            allCharSet.forEach(character => {
-
-                // Must use character.character.id, character.character.name, etc, for accusation
-                let newOptionId = "suggest-select-character-entry-" + character.character.id;
-                if ($('#' + newOptionId).length) {
-
-                }
-                else {
-                    let newOption = document.createElement("option");
-                    newOption.setAttribute("id", newOptionId);
-                    newOption.value = character.character.id;
-                    newOption.text = character.character.name;
-                    selectSuspectElement.add(newOption);
-                }
-
-            });
-
-            allWeaponSet.forEach(weapon => {
-
-                let newOptionId = "suggest-select-weapon-entry-" + weapon.id;
-                if ($('#' + newOptionId).length) {
-
-                }
-                else {
-                    let newOption = document.createElement("option");
-                    newOption.setAttribute("id", newOptionId);
-                    newOption.value = weapon.id;
-                    newOption.text = weapon.name;
-                    selectWeaponElement.add(newOption);
-                }
-
-            });
-        }
+        
 
     }
 
