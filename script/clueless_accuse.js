@@ -17,28 +17,52 @@ $(document).on('show.bs.modal', '#accuseModal', function () {
     let selectRoomElement = document.getElementById('accuse-room-select');
 
     allCharSet.forEach(character => {
-        let newOption = document.createElement("option");
+
         // Must use character.character.id, character.character.name, etc, for accusation
-        newOption.setAttribute("id", "accuse-select-character-entry-" + character.character.id);
-        newOption.value = character.character.id;
-        newOption.text = character.character.name;
-        selectSuspectElement.add(newOption);
+        let newOptionId = "accuse-select-character-entry-" + character.character.id;
+        if ($('#' + newOptionId).length) {
+
+        }
+        else {
+            let newOption = document.createElement("option");
+            newOption.setAttribute("id", newOptionId);
+            newOption.value = character.character.id;
+            newOption.text = character.character.name;
+            selectSuspectElement.add(newOption);
+        }
+
     });
 
     allWeaponSet.forEach(weapon => {
-        let newOption = document.createElement("option");
-        newOption.setAttribute("id", "accuse-select-weapon-entry-" + weapon.id);
-        newOption.value = weapon.id;
-        newOption.text = weapon.name;
-        selectWeaponElement.add(newOption);
+
+        let newOptionId = "accuse-select-weapon-entry-" + weapon.id;
+        if ($('#' + newOptionId).length) {
+
+        }
+        else {
+            let newOption = document.createElement("option");
+            newOption.setAttribute("id", newOptionId);
+            newOption.value = weapon.id;
+            newOption.text = weapon.name;
+            selectWeaponElement.add(newOption);
+        }
+
     });
 
     allRoomSet.forEach(room => {
-        let newOption = document.createElement("option");
-        newOption.setAttribute("id", "accuse-select-room-entry-" + room.id);
-        newOption.value = room.id;
-        newOption.text = room.name;
-        selectRoomElement.add(newOption);
+
+        let newOptionId = "accuse-select-room-entry-" + room.id;
+        if ($('#' + newOptionId).length) {
+
+        }
+        else {
+            let newOption = document.createElement("option");
+            newOption.setAttribute("id", newOptionId);
+            newOption.value = room.id;
+            newOption.text = room.name;
+            selectRoomElement.add(newOption);
+        }
+
     });
 
     $("#accuseSubmitBtn").click(function () {
@@ -105,7 +129,7 @@ connection.on("PlayerMadeAnAccusation", function (message) {
     $('.modal-dialog').draggable({
         "handle": ".modal-header"
     });
-    
+
     let madeByPlayerId = message.player.id;
 
     let madeByPlayerName = getPlayerById(madeByPlayerId).getName();
@@ -123,7 +147,7 @@ connection.on("PlayerMadeAnAccusation", function (message) {
     if (madeByPlayerId != currentPlayerId) {
 
         $("#accuseResultModal_title").html(madeByPlayerName + " Made an Accusation");
-        
+
 
 
     }
@@ -133,22 +157,22 @@ connection.on("PlayerMadeAnAccusation", function (message) {
     }
 
     $("#accuseResultModal_room_name").html(accusedRoomName);
-        $("#accuseResultModal_weapon_name").html(accusedWeaponName);
-        $("#accuseResultModal_character_name").html(accusedCharName);
+    $("#accuseResultModal_weapon_name").html(accusedWeaponName);
+    $("#accuseResultModal_character_name").html(accusedCharName);
 
-        if (wasCorrect) {
-            $("#accuseResultModal_result").html("<strong>The accusation was correct!</strong>");
+    if (wasCorrect) {
+        $("#accuseResultModal_result").html("<strong>The accusation was correct!</strong>");
 
-        }
+    }
 
-        else {
-            $("#accuseResultModal_result").html("<strong>The accusation was incorrect!</strong>");
-            $("#accuseResultBtn").html("Continue");
-            $("#accuseResultBtn").removeClass("d-none");
+    else {
+        $("#accuseResultModal_result").html("<strong>The accusation was incorrect!</strong>");
+        $("#accuseResultBtn").html("Continue");
+        $("#accuseResultBtn").removeClass("d-none");
 
-            $("#accuseResultBtn").click(function() {
-                $("#accuseResultModal").modal('hide');
-            });
-        }
+        $("#accuseResultBtn").click(function () {
+            $("#accuseResultModal").modal('hide');
+        });
+    }
 
 });
