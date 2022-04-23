@@ -80,7 +80,7 @@ async function fetchAccuse(assucationJson) {
         method: 'PUT',
         redirect: 'error',
         headers: {
-            'content-type': 'application/x-www-form-urlencoded',
+            'content-type': 'application/json',
             'Authorization': 'Bearer ' + accessToken
         },
         body: assucationJson

@@ -111,8 +111,11 @@ function clickSpace(coordinates, spaceSet) {
         console.log(responseJson);
 
         stopHighlighSpaces(spaceSet);
-        addToLog("You have moved to " + getRoomNameByCoord(coordinates));
+
         currentPlayObj.moveToken(coordinates);
+
+        addToLog("You have moved to " + getRoomNameByCoord(coordinates));
+        
         success = true;
 
     }).catch(e => {
@@ -128,5 +131,24 @@ connection.on("PlayerHasMoved", function (message) {
     console.log(message);
     sessionStorage.setItem('PlayerHasMovedBroadcast', message);
     
+    let movedPlayerId = message.player.id;
+
+    if (movedPlayerId != currentPlayerId) {
+        let toSpaceX = message.toRoom.x;
+        let toSpaceY = message.toRoom.y;
+        let toCoord = [toSpaceX, toSpaceY];
+
+        let movedPlayer = getPlayerById(movedPlayerId);
+        movedPlayer.moveToken(toCoord);
+
+        addToLog(getCharName(movedPlayerId) + " has moved to " + getRoomNameByCoord(toCoord));
+
+        // Temporary, need to change
+        stopHighlighSpaces(new Set([[1, 2], [2, 1], [3, 2], [2, 3]]));
+    }
+
+    else {
+        
+    }
 
 });

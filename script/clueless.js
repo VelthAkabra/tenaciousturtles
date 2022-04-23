@@ -217,11 +217,5 @@ window.onload = async function () {
 
     // Tests
 
-    // Temporarily highlight ajacent hallways adjacent to center
-    // TODO: move to after it's the player's ture
-    // TODO: compute or receive the available areas
-
-    let coordSet = new Set([[1, 2], [2, 1], [3, 2], [2, 3]]);
-
-    highlighSpaces(coordSet);
+    
 }
