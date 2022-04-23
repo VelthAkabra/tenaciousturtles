@@ -417,3 +417,20 @@ function getRoomNameById(roomId) {
 
     return roomName;
 }
+
+function ajacentSpaceCoordSet(coordinates) {
+    adjacent = new Set();
+
+    adjacent.add([coordinates[0], (coordinates[1]+1)%4]);
+    adjacent.add([coordinates[0], (coordinates[1]+3)%4]);
+    adjacent.add([(coordinates[0]+1)%4, coordinates[1]]);
+    adjacent.add([(coordinates[0]+3)%4, coordinates[1]]);
+
+    adjacent.forEach(spaceCoord => {
+        if (!isRoom(spaceCoord) && !isHallway(spaceCoord)) {
+            adjacent.delete(spaceCoord);
+        }
+    });
+
+    return adjacent;
+}

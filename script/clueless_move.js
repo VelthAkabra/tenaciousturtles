@@ -1,3 +1,5 @@
+var movedSteps = 0;
+
 /**
  * 
  * @param {*} spaceSet Set of coordinates in the form of [x,y]
@@ -115,7 +117,7 @@ function clickSpace(coordinates, spaceSet) {
         currentPlayObj.moveToken(coordinates);
 
         addToLog("You have moved to " + getRoomNameByCoord(coordinates));
-        
+
         success = true;
 
     }).catch(e => {
@@ -129,8 +131,12 @@ function clickSpace(coordinates, spaceSet) {
 
 connection.on("PlayerHasMoved", function (message) {
     console.log(message);
+
+    // Temporary, TODO: delete
+    movedSteps++;
+
     sessionStorage.setItem('PlayerHasMovedBroadcast', message);
-    
+
     let movedPlayerId = message.player.id;
 
     if (movedPlayerId != currentPlayerId) {
@@ -144,12 +150,58 @@ connection.on("PlayerHasMoved", function (message) {
         addToLog(getPlayerById(movedPlayerId).getName() + " has moved to " + getRoomNameByCoord(toCoord));
 
         // Temporary, need to change
-        // TODO
+        // TODO: Remove all following
         stopHighlighSpaces(new Set([toCoord]));
+
+        if (movedSteps == 4) {
+            highlighSpaces(ajacentSpaceCoordSet(currentPlayObj.getToken().getCoordinates()));
+        }
+
     }
 
     else {
-        
+
+        if (isRoom(currentPlayObj.getToken().getCoordinates()) && (currentPlayObj.getToken().getCoordinates()[0] != 2 ||
+            currentPlayObj.getToken().getCoordinates()[1] != 2)) {
+            $("#suggestModal").modal('show');
+
+            let selectWeaponElement = document.getElementById('suggest-weapon-select');
+            let selectSuspectElement = document.getElementById('suggest-character-select');
+
+            allCharSet.forEach(character => {
+
+                // Must use character.character.id, character.character.name, etc, for accusation
+                let newOptionId = "suggest-select-character-entry-" + character.character.id;
+                if ($('#' + newOptionId).length) {
+
+                }
+                else {
+                    let newOption = document.createElement("option");
+                    newOption.setAttribute("id", newOptionId);
+                    newOption.value = character.character.id;
+                    newOption.text = character.character.name;
+                    selectSuspectElement.add(newOption);
+                }
+
+            });
+
+            allWeaponSet.forEach(weapon => {
+
+                let newOptionId = "suggest-select-weapon-entry-" + weapon.id;
+                if ($('#' + newOptionId).length) {
+
+                }
+                else {
+                    let newOption = document.createElement("option");
+                    newOption.setAttribute("id", newOptionId);
+                    newOption.value = weapon.id;
+                    newOption.text = weapon.name;
+                    selectWeaponElement.add(newOption);
+                }
+
+            });
+        }
+
     }
 
 });

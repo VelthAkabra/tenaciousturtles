@@ -68,8 +68,8 @@ connection.on("GameCanStart", function (message) {
     if (isHost) {
         if ($("#start_btn").hasClass("disabled") &&
             (numberOfOtherReadyPlayers == numberOfOtherJoinedPlayers) &&
-            characterSelected && (numberOfOtherReadyPlayers >= 1)) {
-                
+            characterSelected && (numberOfOtherReadyPlayers >= 2)) {
+
             $("#start_btn").removeClass("disabled");
         }
     }
