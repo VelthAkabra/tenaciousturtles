@@ -141,9 +141,10 @@ connection.on("PlayerHasMoved", function (message) {
         let movedPlayer = getPlayerById(movedPlayerId);
         movedPlayer.moveToken(toCoord);
 
-        addToLog(getCharName(movedPlayerId) + " has moved to " + getRoomNameByCoord(toCoord));
+        addToLog(getPlayerById(movedPlayerId).getName() + " has moved to " + getRoomNameByCoord(toCoord));
 
         // Temporary, need to change
+        // TODO
         stopHighlighSpaces(new Set([[1, 2], [2, 1], [3, 2], [2, 3]]));
     }
 

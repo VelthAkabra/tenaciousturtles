@@ -357,3 +357,63 @@ function getRoomNameByCoord(coordinates) {
     }
     return roomName;
 }
+
+// After game started by host only
+function getCharNameByCharId(charId) {
+
+    console.assert(allCharSet.size == 6, "getCharNameByCharId Error: allCharSet size is not 6");
+
+    let charName = null;
+
+    allCharSet.forEach(char => {
+        if (char.character.id == charId) {
+            charName = char.character.name;
+        }
+    })
+
+    if (!charName) {
+        console.error("getCharNameByCharId Error: Character Id " + charId + " not found!");
+    }
+
+    return charName;
+}
+
+// After game started by host only
+function getWeaponNameById(weaponId) {
+
+    console.assert(allWeaponSet.size == 6, "getWeaponNameById Error: allWeaponSet size is not 6");
+
+    let weaponName = null;
+
+    allWeaponSet.forEach(weapon => {
+        if (weapon.id == weaponId) {
+            weaponName = weapon.name;
+        }
+    })
+
+    if (!weaponName) {
+        console.error("getWeaponNameById Error: Weapon Id " + weaponId + " not found!");
+    }
+
+    return weaponName;
+}
+
+// After game started by host only
+function getRoomNameById(roomId) {
+
+    console.assert(allRoomSet.size == 9, "getRoomNameById Error: allRoomSet size is not 9");
+
+    let roomName = null;
+
+    allRoomSet.forEach(room => {
+        if (room.id == roomId) {
+            roomName = room.name;
+        }
+    })
+
+    if (!roomName) {
+        console.error("getRoomNameById Error: Room Id " + roomId + " not found!");
+    }
+
+    return roomName;
+}

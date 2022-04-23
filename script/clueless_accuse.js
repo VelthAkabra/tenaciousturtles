@@ -61,7 +61,7 @@ $(document).on('show.bs.modal', '#accuseModal', function () {
 
         fetchAccuse(assucationJson).then(responseJson => {
             console.log(responseJson);
-            alert("Accusation Made!");
+            // alert("Accusation Made!");
         }).catch(e => {
             console.error('fetchAccuse Error:' + e.name + ': ' + e.message);
             addToLog("Failed to make the accusation!");
@@ -95,3 +95,56 @@ async function fetchAccuse(assucationJson) {
     return responseJson;
 
 }
+
+connection.on("PlayerMadeAnAccusation", function (message) {
+    console.log(message);
+
+    $("#accuseModal").modal('hide');
+    $("#accuseResultModal").modal('show');
+    
+    let madeByPlayerId = message.player.id;
+
+    let madeByPlayerName = getPlayerById(madeByPlayerId).getName();
+
+    let accuesedCharId = message.characterId;
+    let accusedWeaponId = message.weaponId;
+    let accusedRoomId = message.roomId;
+
+    let wasCorrect = message.wasCorrect;
+
+    let accusedCharName = getCharNameByCharId(accuesedCharId);
+    let accusedWeaponName = getWeaponNameById(accusedWeaponId);
+    let accusedRoomName = getRoomNameById(accusedRoomId);
+
+    if (madeByPlayerId != currentPlayerId) {
+
+        $("#accuseResultModal_title").html(madeByPlayerName + " Made an Accusation");
+        
+
+
+    }
+
+    else {
+        $("#accuseResultModal_title").html("You Made an Accusation");
+    }
+
+    $("#accuseResultModal_room_name").html(accusedRoomName);
+        $("#accuseResultModal_weapon_name").html(accusedWeaponName);
+        $("#accuseResultModal_character_name").html(accusedCharName);
+
+        if (wasCorrect) {
+            $("#accuseResultModal_result").html("<strong>The accusation was correct!</strong>");
+
+        }
+
+        else {
+            $("#accuseResultModal_result").html("<strong>The accusation was incorrect!</strong>");
+            $("#accuseResultBtn").html("Continue");
+            $("#accuseResultBtn").removeClass("d-none");
+
+            $("#accuseResultBtn").click(function() {
+                $("#accuseResultModal").modal('hide');
+            });
+        }
+
+});
