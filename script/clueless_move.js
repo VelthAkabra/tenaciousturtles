@@ -21,13 +21,16 @@ function highlighSpaces(spaceSet) {
 
         $("#" + tileId).hover(function () {
             // alert(coordinates);
-            $(this).animate({
-                outlineColor: "blue"
-            }, 1)
+            // $(this).animate({
+            //     outlineColor: "blue"
+            // }, 1)
+
+            $("#" + tileId).css("outline-color", "blue");
         }, function () {
-            $(this).animate({
-                outlineColor: "lime"
-            }, 1)
+            // $(this).animate({
+            //     outlineColor: "lime"
+            // }, 1)
+            $("#" + tileId).css("outline-color", "lime");
         });
 
         let spacecontentId = "spacecontent-" + coordinates[0] + coordinates[1];
