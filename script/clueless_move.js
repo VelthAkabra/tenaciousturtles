@@ -183,7 +183,7 @@ function clickSpace(coordinates, spaceSet) {
 
             cards.forEach(card => {
                 if (card instanceof RoomCard) {
-                    if (card.name == roomName && card.getPlayerId() &&
+                    if (card.getName() == roomName && card.getPlayerId() &&
                         card.getPlayerId() != currentPlayerId && notYetDisproved) {
                         notYetDisproved = false;
                         addToLog(getPlayerById(card.getPlayerId()).getName() + " disproved your suggestion!");

@@ -23,6 +23,7 @@ connection.on("PlayerJoinedGame", function (message) {
             if ((!$("#start_btn").hasClass("disabled")) &&
                 (numberOfOtherReadyPlayers != numberOfOtherJoinedPlayers)) {
                 $("#start_btn").addClass("disabled");
+                $("#start_btn").off("click");
             }
         }
     }
@@ -71,6 +72,10 @@ connection.on("GameCanStart", function (message) {
             characterSelected && (numberOfOtherReadyPlayers >= 2)) {
 
             $("#start_btn").removeClass("disabled");
+
+            $("#start_btn").click(function () {
+                hostStartsGame();
+            });
         }
     }
 

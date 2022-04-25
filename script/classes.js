@@ -328,6 +328,10 @@ class RoomCard extends Card {
         super(cardId, name, playerId, isExtra);
         this.roomId = roomId;
     }
+
+    deepEquals(card) {
+        return super.deepEquals(card) && this.roomId == card.roomId;
+    }
 }
 
 class WeaponCard extends Card {
@@ -336,6 +340,10 @@ class WeaponCard extends Card {
         super(cardId, name, playerId, isExtra);
         this.weaponId = weaponId;
     }
+
+    deepEquals(card) {
+        return super.deepEquals(card) && this.weaponId == card.weaponId;
+    }
 }
 
 class CharacterCard extends Card {
@@ -343,6 +351,10 @@ class CharacterCard extends Card {
     constructor(cardId, name, playerId = null, isExtra = false, characterId = null) {
         super(cardId, name, playerId, isExtra);
         this.characterId = characterId;
+    }
+
+    deepEquals(card) {
+        return super.deepEquals(card) && this.characterId == card.characterId;
     }
 }
 

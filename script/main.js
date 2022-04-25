@@ -90,6 +90,14 @@ $(document).on('show.bs.modal', '#signedInModal', function () {
 
 
     // Join a Game Session
+    let inputGameCodeElement = document.getElementById("inputGameCodeText");
+    inputGameCodeElement.addEventListener("keypress", function onEvent(event) {
+        if (event.key === "Enter") {
+            document.getElementById("joinGameBtn").click();
+        }
+    });
+
+
     $("#joinGameBtn").click(function () {
 
         if (accessToken == false) {
