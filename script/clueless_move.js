@@ -12,8 +12,8 @@ function highlighSpaces(spaceSet) {
 
         let tileId = "tile-" + coordinates[0] + coordinates[1];
         $("#" + tileId).animate({
-            outlineColor: "lime",
-            outlineWidth: "3px"
+            borderColor: "lime",
+            borderWidth: "3px"
         });
 
         // let border_original_color = $("#" + tileId).css("border-color");
@@ -27,15 +27,15 @@ function highlighSpaces(spaceSet) {
             //     outlineColor: "blue"
             // }, 1)
 
-            $("#" + tileId).css("outline-color", "blue");
+            $("#" + tileId).css("border-color", "blue");
         }, function () {
             // $(this).animate({
             //     outlineColor: "lime"
             // }, 1)
-            $("#" + tileId).css("outline-color", "lime");
+            $("#" + tileId).css("border-color", "lime");
         });
 
-        let spacecontentId = "spacecontent-" + coordinates[0] + coordinates[1];
+        // let spacecontentId = "spacecontent-" + coordinates[0] + coordinates[1];
 
         $("#" + tileId).click(function () {
             clickSpace(coordinates, spaceSet);
@@ -57,16 +57,12 @@ function stopHighlighSpaces(spaceSet) {
             "stopHighlighSpaces Error: " + coordinates + " is invalid");
 
         let tileId = "tile-" + coordinates[0] + coordinates[1];
-        $("#" + tileId).css("outline-color", "black");
-        $("#" + tileId).css("outline-width", "1px");
+        $("#" + tileId).css("border-color", "black");
+        $("#" + tileId).css("border-width", "1px");
 
         $("#" + tileId).off("mouseenter mouseleave");
 
-        let spacecontentId = "spacecontent-" + coordinates[0] + coordinates[1];
-
         $("#" + tileId).off('click');
-
-        // $("#" + spacecontentId).off('click');
 
     });
 }

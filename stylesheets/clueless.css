@@ -2,66 +2,108 @@
     text-align: center;
 }
 
+.below_title {
+    display: flex;
+}
+
 .leftdiv {
-    float: left;
-    width: 23%;
+    /* float: left; */
+    margin: auto;
+    flex-basis: 23%;
     /* border: 1px solid red; */
+
+    display: flex;
+    flex-direction: column;
 
 }
 
 .rightdiv {
-    float: left;
-    width: 23%;
+    /* float: left; */
+    margin: auto;
+    flex-basis: 23%;
     /* border: 1px solid red; */
+
+    display: flex;
+    flex-direction: column;
 
 }
 
 .sidebar {
     padding: 1%;
-    background-color: 009900;
-    width: 20%;
+    /* background-color: 009900; */
 }
 
 .middlediv {
-    float: left;
-    background-color: 009900;
-    width: 54%;
+    /* float: left; */
+    margin: auto;
+    /* background-color: 009900; */
+    flex-basis: 54%;
     /* border: 1px solid red; */
+
 }
 
 .gameboard {
     width: 55%;
     margin: auto;
     margin-top: 10px;
-    white-space: nowrap;
+    /* border: 1px solid red; */
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-auto-columns: minmax(60px, auto);
+    grid-auto-rows: minmax(60px, auto);
+
 }
 
 .spacecontent_texts {
-    /* margin-top: 0px;
-    /* text-align: center; */
-    margin-bottom: 15%;
-    /* padding-left: 2%; */
+    /* margin-top: 0px; */
+    text-align: center;
+    /* margin: auto; */
+    text-size-adjust: auto;
+
+    height: 50%;
+    width: 100%;
+    line-height: 1em;
+
+    /* border: 1px solid green; */
 }
 
 .spacecontent_dots {
-    margin-left: 10%;
+    /* margin-left: 10%;
     margin-right: 10%;
     margin-top: 0px;
-    padding: 0px;
+    padding: 0px; */
     /* text-align: center; */
+
+    /* margin: auto; */
+
+    height: 50%;
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 1px solid green; */
+
 }
 
 .roomtile {
     width: 100%;
     /* padding-top: 100%; */
     background-color: white;
-    outline: 1px solid black;
+    border: 1px solid black;
     white-space: normal;
+
 }
 
-.spacecontent {
+/* .spacecontent {
     overflow-wrap: break-word;
-}
+    float: left;
+    line-height: 1em;
+} */
 
 .verthalltile {
     width: 50%;
@@ -69,8 +111,14 @@
     margin-left: 25%;
     margin-right: 25%;
     background-color: white;
-    outline: 1px solid black;
+    border: 1px solid black;
     white-space: normal;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .horihalltile {
@@ -79,21 +127,26 @@
     margin-top: 25%;
     margin-bottom: 25%;
     background-color: white;
-    outline: 1px solid black;
+    border: 1px solid black;
     white-space: normal;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .blanktile {
-    width: 100%;
+    /* width: 100%; */
     /* padding-top: 100%; */
 }
 
-.gameCol {
+/* .gameCol {
     width: 19%;
     display: inline-block;
     margin: 0px;
     padding: 0px;
-}
+} */
 
 #yourcards_box{
     margin: auto;
@@ -106,12 +159,17 @@
 }
 
 #extracards_box{
-    margin: auto;
+    /* margin: auto; */
     /* margin-bottom: 5%; */
 
     width: 100%;
 
     word-wrap: break-word;
+
+}
+
+#rightdiv_placeholder_box {
+    flex-grow: 1;
 }
 
 .yourcarddisplay {
@@ -140,17 +198,12 @@
     vertical-align: top;
 }
 
-.spacecontent {
-    float: left;
-    line-height: 1em;
-}
-
 .dot {
     float: left;
     /* font-size: 2em; */
     /* line-height: ; */
-    height: 10px;
-    width: 10px;
+    height: 11px;
+    width: 11px;
     border-radius: 50%;
 
     /* margin: 0px;
@@ -185,10 +238,13 @@
 
 #playerlist_box {
     width: 100%;
-    height: 200px;
+    /* height: 200px; */
     border: 1px solid #000;
     margin: auto;
     overflow-y: auto;
+
+    flex-basis: 20%;
+    min-width: 160px;
 }
 
 #textlog_box {
@@ -199,8 +255,10 @@
     font: 16px/26px Georgia, Garamond, Serif;
     overflow-y: auto;
     overflow-wrap: break-word;
+
+    flex-grow: 1;
 }
 
 .btn {
-    margin-top: 5%;
+    margin-top: 3%;
 }

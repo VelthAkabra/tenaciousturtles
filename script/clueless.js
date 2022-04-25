@@ -103,13 +103,16 @@ $(document).on('show.bs.modal', '#selectCharModal', function () {
 function pageSetUp() {
 
     // Set the height of Game Board Spaces
-    let gameColWidth = $('.gameCol').width();
+    // let gameColWidth = $('.gameCol').width();
     // console.log(gameColWidth);
-    $('.roomtile').css({ 'height': gameColWidth + 'px' });
-    $('.verthalltile').css({ 'height': gameColWidth + 'px' });
-    $('.horihalltile').css({ 'height': gameColWidth / 2.0 + 'px' });
-    $('.blanktile').css({ 'height': gameColWidth + 'px' });
+    // $('.roomtile').css({ 'height': gameColWidth + 'px' });
+    // $('.verthalltile').css({ 'height': gameColWidth + 'px' });
+    // $('.horihalltile').css({ 'height': gameColWidth / 2.0 + 'px' });
+    // $('.blanktile').css({ 'height': gameColWidth + 'px' });
 
+    // Set the height of Game Board
+    let gameBoardWidth = $('.gameboard').width();
+    $('.gameboard').css({ 'height': gameBoardWidth + 'px' });
 
     // Set the height of Player Cards
     let playerCardWidth = $('.yourcarddisplay').width() * 16.66 / 100.0;
@@ -121,16 +124,20 @@ function pageSetUp() {
     $('.extracarddisplay').css({ 'height': extraCardWidth * 1.8 + 'px' });
 
 
-    // Set the height of the player list box and textlog box
+    // Set the height of the divs, player list box and textlog box
     let middledivHt = $('.middlediv').height();
-    let playerlist_box_ht = middledivHt * .25;
-    let textlog_box_ht = middledivHt * .58;
-    $('#playerlist_box').css({ 'height': playerlist_box_ht + 'px' });
-    $('#textlog_box').css({ 'height': textlog_box_ht + 'px' });
+
+    $('.leftdiv').css({ 'height': middledivHt + 'px' });
+    $('.rightdiv').css({ 'height': middledivHt + 'px' });
+
+    // let playerlist_box_ht = middledivHt * .25;
+    // let textlog_box_ht = middledivHt * .58;
+    // $('#playerlist_box').css({ 'height': playerlist_box_ht + 'px' });
+    // $('#textlog_box').css({ 'height': textlog_box_ht + 'px' });
 
     // Set the height of the right side placeholder box
-    let right_placeholder_box_ht = (middledivHt - extraCardWidth) * .6;
-    $('#rightdiv_placeholder_box').css({ 'height': right_placeholder_box_ht + 'px' });
+    // let right_placeholder_box_ht = (middledivHt - extraCardWidth) * .6;
+    // $('#rightdiv_placeholder_box').css({ 'height': right_placeholder_box_ht + 'px' });
 
 
 }
